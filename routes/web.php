@@ -18,6 +18,7 @@ Route::middleware("auth:web")->group(function () {
     Route::prefix("management")->name("management.")->group(function () {
         Route::prefix("roles")->name("roles.")->controller(\App\Http\Controllers\Management\RoleController::class)->group(function () {
             Route::get("", "index")->name("index");
+            Route::get("{id}", "show")->name("show");
         });
     });
 });

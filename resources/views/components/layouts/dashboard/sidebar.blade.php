@@ -1,6 +1,3 @@
-
-
-
 <div id="sidebar">
     <div class="sidebar-wrapper active">
         <div class="sidebar-header position-relative">
@@ -9,7 +6,8 @@
                     <a href="index.html"><img src="{{asset('dist/assets/compiled/svg/logo.svg')}}" alt="Logo" srcset=""></a>
                 </div>
                 <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                         aria-hidden="true"
                          role="img" class="iconify iconify--system-uicons" width="20" height="20"
                          preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21">
                         <g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round"
@@ -28,8 +26,10 @@
                         <input class="form-check-input  me-0" type="checkbox" id="toggle-dark" style="cursor: pointer">
                         <label class="form-check-label"></label>
                     </div>
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
-                         role="img" class="iconify iconify--mdi" width="20" height="20" preserveAspectRatio="xMidYMid meet"
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                         aria-hidden="true"
+                         role="img" class="iconify iconify--mdi" width="20" height="20"
+                         preserveAspectRatio="xMidYMid meet"
                          viewBox="0 0 24 24">
                         <path fill="currentColor"
                               d="m17.75 4.09l-2.53 1.94l.91 3.06l-2.63-1.81l-2.63 1.81l.91-3.06l-2.53-1.94L12.44 4l1.06-3l1.06 3l3.19.09m3.5 6.91l-1.64 1.25l.59 1.98l-1.7-1.17l-1.7 1.17l.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95l2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85c-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14c.4-.4.82-.76 1.27-1.08c.75-.53 1.93.36 1.85 1.19c-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82c-2.81 3.14-2.7 7.96.31 10.98c3.02 3.01 7.84 3.12 10.98.31Z">
@@ -44,17 +44,24 @@
         <div class="sidebar-menu">
             <ul class="menu">
                 <li class="sidebar-title">Menu</li>
+                @foreach($_menus as $menu)
+                    <li class="sidebar-item active @if($menu->children->count() > 0) has-sub @endif ">
+                        <a href="@if($menu->route_name) {{route($menu->route_name)}} @endif" class='sidebar-link'>
+                            {!!$menu->icon!!}
+                            <span>{{$menu->label}}</span>
+                        </a>
 
-                <li
-                    class="sidebar-item  ">
-                    <a href="index.html" class='sidebar-link'>
-                        <i class="bi bi-grid-fill"></i>
-                        <span>Dashboard</span>
-                    </a>
-
-
-                </li>
-
+                        @if($menu->children->count()>0)
+                            <ul class="submenu active">
+                                @foreach($menu->children as $submenu)
+                                    <li class="submenu-item @if(request()->routeIs($submenu->route_name."*")) active @endif">
+                                        <a href="{{route($submenu->route_name)}}" class="submenu-link">{{$submenu->label}}</a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endif
+                    </li>
+                @endforeach
                 <li
                     class="sidebar-item  has-sub">
                     <a href="#" class='sidebar-link'>

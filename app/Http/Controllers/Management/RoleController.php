@@ -21,4 +21,9 @@ class RoleController extends Controller
 
         return response()->view("management.roles.index");
     }
+
+    public function show():Response
+    {
+        return response()->view("management.roles.index");
+    }
 }
