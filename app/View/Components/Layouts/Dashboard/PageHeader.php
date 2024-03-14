@@ -10,13 +10,20 @@ use Illuminate\View\Component;
 class PageHeader extends Component
 {
     public string $lastBreadcrumbKey;
+    public string $_pageTitle;
+    public string $_pageSubTitle;
+
     /**
      * Create a new component instance.
      */
     public function __construct()
     {
-        $breadcrumbs = array_keys(FacadesView::getShared()["breadcrumbs"]);
+        $sharedView = FacadesView::getShared();
+
+        $breadcrumbs = array_keys($sharedView["breadcrumbs"]);
         $this->lastBreadcrumbKey = end($breadcrumbs);
+        $this->_pageTitle = $breadcrumbs["pageTitle"] ?? "";
+        $this->_pageSubTitle = $breadcrumbs["pageSubTitle"] ?? "";
     }
 
     /**
