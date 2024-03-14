@@ -9,7 +9,6 @@ use Illuminate\Http\Response;
 
 class RoleController extends Controller
 {
-
     /**
      * @param RoleService $service
      * @return Response
