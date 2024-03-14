@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthenticateService extends BaseService
 {
+    private bool $isRememberMe;
     /**
      * @return string[]
      */
@@ -21,9 +22,10 @@ class AuthenticateService extends BaseService
      * @param array $requestedData
      * @return array
      */
-    public function authenticate(array $requestedData):array
+    public function authenticate(array $requestedData): array
     {
-        if (Auth::attempt($requestedData)){
+        $this->checkRememberMe($requestedData);
+        if (Auth::attempt($requestedData, $this->isRememberMe)) {
             request()->session()->regenerate();
             return ["success" => true];
         }
@@ -32,5 +34,19 @@ class AuthenticateService extends BaseService
             "success" => false,
             "message" => "Email or password is invalid"
         ];
+    }
+
+
+    /**
+     * @param array $requestedData
+     * @return void
+     */
+    private function checkRememberMe(array &$requestedData): void
+    {
+        $this->isRememberMe = false;
+        if (isset($requestedData["remember_me"]) && $requestedData["remember_me"] === "on") {
+            $this->isRememberMe = true;
+            unset($requestedData["remember_me"]);
+        }
     }
 }
