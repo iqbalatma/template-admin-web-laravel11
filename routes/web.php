@@ -2,17 +2,15 @@
 
 use Illuminate\Support\Facades\Route;
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
 
-
-Route::controller(\App\Http\Controllers\Auth\AuthenticateController::class)->group(function () {
+Route::middleware("guest")->controller(\App\Http\Controllers\Auth\AuthenticateController::class)->group(function () {
     Route::get("login", "login")->name("login");
     Route::post("authenticate", "authenticate")->name("authenticate");
 });
 
 Route::middleware("auth:web")->group(function () {
+    Route::post("logout", [\App\Http\Controllers\Auth\AuthenticateController::class, "logout"])->name("logout");
+
     Route::get('/', [\App\Http\Controllers\DashboardController::class, "index"]);
 
     Route::prefix("management")->name("management.")->group(function () {
