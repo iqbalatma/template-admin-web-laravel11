@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create(Table::MENUS->value, function (Blueprint $table) {
             $table->uuid("id")->primary();
             $table->string("label");
-            $table->string("url")->default("#");
+            $table->string("route_name_group")->nullable();
             $table->string("route_name")->nullable();
             $table->string("icon")->nullable();
             $table->uuid("parent_id")->nullable();

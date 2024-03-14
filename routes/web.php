@@ -20,5 +20,9 @@ Route::middleware("auth:web")->group(function () {
             Route::get("", "index")->name("index");
             Route::get("{id}", "show")->name("show");
         });
+
+        Route::prefix("roles/permissions")->name("roles.permissions.")->controller(\App\Http\Controllers\Management\PermissionController::class)->group(function (){
+           Route::get("", "index")->name("index");
+        });
     });
 });

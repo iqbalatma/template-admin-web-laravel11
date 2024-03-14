@@ -8,18 +8,21 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 
 
 /**
  * @property string id
  * @property string label
- * @property string url
+ * @property string route_name_group
+ * @property string route_name
  * @property string icon
  * @property string parent_id
  * @property string permission_name
  * @property string level
  * @property Carbon created_at
  * @property Carbon updated_at
+ * @property Collection<Menu> children
  */
 class Menu extends Model
 {
@@ -28,7 +31,7 @@ class Menu extends Model
     protected $table = Table::MENUS->value;
 
     protected $fillable = [
-        "label", "url", "icon", "parent_id", "permission_name", "level"
+        "label", "icon", "parent_id", "permission_name", "level", "route_name", "route_name_group"
     ];
 
 

@@ -45,16 +45,16 @@
             <ul class="menu">
                 <li class="sidebar-title">Menu</li>
                 @foreach($_menus as $menu)
-                    <li class="sidebar-item active @if($menu->children->count() > 0) has-sub @endif ">
+                    <li class="sidebar-item @if($menu->is_child_active_exist) active @endif @if($menu->children->count() > 0) has-sub @endif ">
                         <a href="@if($menu->route_name) {{route($menu->route_name)}} @endif" class='sidebar-link'>
                             {!!$menu->icon!!}
                             <span>{{$menu->label}}</span>
                         </a>
 
                         @if($menu->children->count()>0)
-                            <ul class="submenu active">
+                            <ul class="submenu @if($menu->is_child_active_exist) active @endif">
                                 @foreach($menu->children as $submenu)
-                                    <li class="submenu-item @if(request()->routeIs($submenu->route_name."*")) active @endif">
+                                    <li class="submenu-item @if(request()->routeIs($submenu->route_name_group."*")) active @endif">
                                         <a href="{{route($submenu->route_name)}}" class="submenu-link">{{$submenu->label}}</a>
                                     </li>
                                 @endforeach

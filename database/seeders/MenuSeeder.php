@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Menu;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class MenuSeeder extends Seeder
@@ -12,7 +11,7 @@ class MenuSeeder extends Seeder
         [
             "id" => "9b8f8e39-3f52-4465-aa95-a371520e3c00",
             "label" => "Management",
-            "url" => "#",
+            "route_name_group" => null,
             "route_name" => null,
             "icon" => '<i class="bi bi-card-list"></i>',
             "parent_id" => null,
@@ -22,18 +21,8 @@ class MenuSeeder extends Seeder
         [
             "id" => "9b8f8e39-3f52-4465-aa95-a371520e3c01",
             "label" => "Roles",
-            "url" => "management/roles",
-            "route_name" => "management.roles",
-            "icon" => null,
-            "parent_id" => "9b8f8e39-3f52-4465-aa95-a371520e3c00",
-            "permission_name" => "s",
-            "level" => 2,
-        ],
-        [
-            "id" => "9b8f8e39-3f52-4465-aa95-a371520e3c02",
-            "label" => "Permissions",
-            "url" => "management/permissions",
-            "route_name" => "management.permissions",
+            "route_name_group" => "management.roles",
+            "route_name" => "management.roles.index",
             "icon" => null,
             "parent_id" => "9b8f8e39-3f52-4465-aa95-a371520e3c00",
             "permission_name" => "s",

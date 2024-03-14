@@ -2,10 +2,12 @@
 
 namespace App\View\Components\Layouts\Dashboard;
 
+use App\Models\Menu;
 use App\Repositories\MenuRepository;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\Component;
 
 class Sidebar extends Component
@@ -16,7 +18,27 @@ class Sidebar extends Component
      */
     public function __construct()
     {
-        $this->_menus = MenuRepository::getAllTopLevelMenuWithChildren();
+        if(!($allMenu = Cache::get(config("cache.keys.all_menu")))){
+            $allMenu = MenuRepository::getAllTopLevelMenuWithChildren();
+            $allMenu = $allMenu->map(function (Menu $item){
+                $item->children_routes = $item->children->pluck("route_name_group");
+                return $item;
+            });
+            Cache::put(config("cache.keys.all_menu"), $allMenu);
+        }
+
+        $allMenu->map(function (Menu $item){
+            $item->is_child_active_exist = false;
+            foreach ($item->children_routes as $children_route){
+                if (request()->routeIs($children_route."*")){
+                    $item->is_child_active_exist = true;
+                }
+            }
+
+            return $item;
+        });
+
+        $this->_menus = $allMenu;
     }
 
     /**
