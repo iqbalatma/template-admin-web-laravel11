@@ -53,7 +53,7 @@ return [
     | also change console generated parent class of Service
     |
     */
-    "base_service_parent_class" => "App\Contracts\Abstracts\Services\BaseService",
+    "base_service_parent_class" => "App\Contracts\Abstracts\BaseService",
 
     /*
     |--------------------------------------------------------------------------

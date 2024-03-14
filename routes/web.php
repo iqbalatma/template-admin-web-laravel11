@@ -7,4 +7,8 @@ use Illuminate\Support\Facades\Route;
 //});
 
 
+Route::controller(\App\Http\Controllers\Auth\AuthenticateController::class)->group(function (){
+   Route::get("login", "login")->name("login");
+   Route::post("authenticate", "authenticate")->name("authenticate");
+});
 Route::get('/', [\App\Http\Controllers\DashboardController::class, "index"]);
