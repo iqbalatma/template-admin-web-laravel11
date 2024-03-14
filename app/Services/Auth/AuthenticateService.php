@@ -7,13 +7,6 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthenticateService extends BaseService
 {
-    protected $repository;
-
-    public function __construct()
-    {
-        // $this->repository
-    }
-
     /**
      * @return string[]
      */

@@ -22,8 +22,8 @@ class PageHeader extends Component
 
         $breadcrumbs = array_keys($sharedView["breadcrumbs"]);
         $this->lastBreadcrumbKey = end($breadcrumbs);
-        $this->_pageTitle = $breadcrumbs["pageTitle"] ?? "";
-        $this->_pageSubTitle = $breadcrumbs["pageSubTitle"] ?? "";
+        $this->_pageTitle = $sharedView["pageTitle"] ?? "";
+        $this->_pageSubTitle = $sharedView["pageSubTitle"] ?? "";
     }
 
     /**

@@ -23,7 +23,7 @@
         <div id="main-content">
             <div class="page-heading">
                 <x-layouts.dashboard.page-header></x-layouts.dashboard.page-header>
-
+                <x-alert></x-alert>
                 <section class="section">
                     {{$slot}}
                 </section>
