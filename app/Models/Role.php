@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon created_at
  * @property Carbon updated_at
  */
-class Role extends Model
+class Role extends \Spatie\Permission\Models\Role
 {
     use HasUuids;
 

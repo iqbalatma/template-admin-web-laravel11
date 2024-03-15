@@ -3,10 +3,13 @@
 namespace App\Services\Management;
 
 use App\Contracts\Abstracts\BaseService;
+use App\Events\RoleChangedEvent;
 use App\Models\Permission;
+use App\Models\Role;
 use App\Repositories\RoleRepository;
 use Exception;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class RoleService extends BaseService
 {
@@ -50,7 +53,7 @@ class RoleService extends BaseService
     /**
      * @return array
      */
-    public function getCreateData():array
+    public function getCreateData(): array
     {
         $this->addBreadCrumbs([
             "Create" => route("management.roles.create")
@@ -61,7 +64,36 @@ class RoleService extends BaseService
             "pageTitle" => "Role",
             "pageSubTitle" => "Role that will attach to every user",
             "breadcrumbs" => $this->getBreadcrumbs(),
-            "permissions" => Permission::all()
+            "permissions" => PermissionService::getAllPermission()->groupBy("feature_group")
         ];
+    }
+
+    /**
+     * @param array $requestedData
+     * @return array
+     */
+    public function addNewDataRole(array $requestedData): array
+    {
+        try {
+            $response = [
+                "success" => true
+            ];
+
+            DB::beginTransaction();
+            /** @var Role $role */
+            $role = $this->repository->addNewData($requestedData);
+
+            if (isset($requestedData["permissions"])){
+                $role->syncPermissions($requestedData["permissions"]);
+            }
+
+            RoleChangedEvent::dispatch();
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+            $response = getDefaultErrorResponse($e);
+        }
+
+        return $response;
     }
 }

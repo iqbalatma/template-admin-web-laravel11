@@ -8,13 +8,9 @@ use Illuminate\Support\Facades\Cache;
 
 class PermissionService extends BaseService
 {
-    protected $repository;
-
-    public function __construct()
-    {
-        // $this->repository
-    }
-
+    /**
+     * @return array
+     */
     public function getAllData():array
     {
         return [
