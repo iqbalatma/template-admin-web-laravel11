@@ -83,7 +83,7 @@ class RoleService extends BaseService
             /** @var Role $role */
             $role = $this->repository->addNewData($requestedData);
 
-            if (isset($requestedData["permissions"])){
+            if (isset($requestedData["permissions"])) {
                 $role->syncPermissions($requestedData["permissions"]);
             }
 

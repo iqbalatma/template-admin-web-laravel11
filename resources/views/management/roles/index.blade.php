@@ -1,7 +1,8 @@
 <x-layouts.dashboard.layout>
     <div class="card">
-        <div class="card-header">
+        <div class="card-header d-flex justify-content-between">
             <h4 class="card-title">All Data Role</h4>
+            <x-button-create :create-url="route('management.roles.create')"></x-button-create>
         </div>
         <div class="card-content">
             <div class="card-body">
@@ -21,7 +22,7 @@
                                 <td>{{$role->guard_name}}</td>
                                 <td>
                                     @if($role->is_mutable)
-                                        <button class="btn btn-success">Edit</button>
+                                        <x-button-edit :edit-url="route('management.roles.index')"></x-button-edit>
                                     @else
                                         -
                                     @endif

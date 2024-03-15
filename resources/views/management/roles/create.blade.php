@@ -33,7 +33,8 @@
                                 @endforeach
                             </div>
                         </div>
-                        <div class="col-md-12 d-flex justify-content-end">
+                        <div class="col-md-12 d-flex justify-content-end gap-2">
+                            <x-button-back :back-url="route('management.roles.index')"></x-button-back>
                             <x-button-submit></x-button-submit>
                         </div>
                     </div>
