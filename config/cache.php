@@ -106,5 +106,6 @@ return [
     'keys' => [
         "all_menu" => "all_menu",
         "all_role" => "all_role",
+        "all_permission" => "all_permission",
     ]
 ];

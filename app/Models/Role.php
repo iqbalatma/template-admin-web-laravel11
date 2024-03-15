@@ -20,4 +20,7 @@ class Role extends Model
     use HasUuids;
 
     protected $table = Table::ROLES->value;
+    protected $fillable = [
+        "name", "guard_name", "is_mutable"
+    ];
 }

@@ -11,21 +11,17 @@
                         <tr>
                             <th>Name</th>
                             <th>Guard Name</th>
-                            <th>Action</th>
+                            <th>Description</th>
+                            <th>Feature Group</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($roles as $role)
+                        @foreach($permissions as $role)
                             <tr>
                                 <td class="text-bold-500">{{$role->name}}</td>
                                 <td>{{$role->guard_name}}</td>
-                                <td>
-                                    @if($role->is_mutable)
-                                        <button class="btn btn-success">Edit</button>
-                                    @else
-                                        -
-                                    @endif
-                                </td>
+                                <td>{{$role->description}}</td>
+                                <td>{{$role->feature_group}}</td>
                             </tr>
                         @endforeach
                         </tbody>

@@ -21,8 +21,15 @@ class RoleController extends Controller
         return response()->view("management.roles.index");
     }
 
-    public function show():Response
+
+    /**
+     * @param RoleService $service
+     * @return Response
+     */
+    public function create(RoleService $service):Response
     {
-        return response()->view("management.roles.index");
+        $response = $service->getCreateData();
+        viewShare($response);
+        return response()->view("management.roles.create");
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\Permission;
 use App\Models\Menu;
 use Illuminate\Database\Seeder;
 
@@ -25,7 +26,17 @@ class MenuSeeder extends Seeder
             "route_name" => "management.roles.index",
             "icon" => null,
             "parent_id" => "9b8f8e39-3f52-4465-aa95-a371520e3c00",
-            "permission_name" => "s",
+            "permission_name" => Permission::MANAGEMENT_ROLES_SHOW->value,
+            "level" => 2,
+        ],
+        [
+            "id" => "9b8f8e39-3f52-4465-aa95-a371520e3c02",
+            "label" => "Permissions",
+            "route_name_group" => "management.permissions",
+            "route_name" => "management.permissions.index",
+            "icon" => null,
+            "parent_id" => "9b8f8e39-3f52-4465-aa95-a371520e3c00",
+            "permission_name" => Permission::MANAGEMENT_PERMISSIONS_SHOW->value,
             "level" => 2,
         ],
     ];

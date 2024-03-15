@@ -16,11 +16,9 @@ Route::middleware("auth:web")->group(function () {
     Route::prefix("management")->name("management.")->group(function () {
         Route::prefix("roles")->name("roles.")->controller(\App\Http\Controllers\Management\RoleController::class)->group(function () {
             Route::get("", "index")->name("index");
-            Route::get("{id}", "show")->name("show");
+            Route::get("create", "create")->name("create");
         });
 
-        Route::prefix("roles/permissions")->name("roles.permissions.")->controller(\App\Http\Controllers\Management\PermissionController::class)->group(function (){
-           Route::get("", "index")->name("index");
-        });
+        Route::get("/permissions", [\App\Http\Controllers\Management\PermissionController::class, "index"])->name("permissions.index");
     });
 });

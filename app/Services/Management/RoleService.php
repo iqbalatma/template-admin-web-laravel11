@@ -3,6 +3,7 @@
 namespace App\Services\Management;
 
 use App\Contracts\Abstracts\BaseService;
+use App\Models\Permission;
 use App\Repositories\RoleRepository;
 use Exception;
 use Illuminate\Support\Facades\Cache;
@@ -44,5 +45,23 @@ class RoleService extends BaseService
         }
 
         return $response;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCreateData():array
+    {
+        $this->addBreadCrumbs([
+            "Create" => route("management.roles.create")
+        ]);
+        return [
+            "success" => true,
+            "title" => "Role",
+            "pageTitle" => "Role",
+            "pageSubTitle" => "Role that will attach to every user",
+            "breadcrumbs" => $this->getBreadcrumbs(),
+            "permissions" => Permission::all()
+        ];
     }
 }
