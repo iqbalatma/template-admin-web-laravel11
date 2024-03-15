@@ -4,10 +4,8 @@ namespace App\Http\Controllers\Management;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Management\Roles\StoreRoleRequest;
-use App\Models\Role;
 use App\Services\Management\RoleService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class RoleController extends Controller
@@ -49,5 +47,20 @@ class RoleController extends Controller
         if ($this->isError($response)) return $this->getErrorResponse();
 
         return redirect()->route("management.roles.index")->with("success", "Add new data role successfully");
+    }
+
+    /**
+     * @param RoleService $service
+     * @param string $id
+     * @return Response|RedirectResponse
+     */
+    public function edit(RoleService $service, string $id): Response|RedirectResponse
+    {
+        $response = $service->getEditDataById($id);
+        viewShare($response);
+
+        if ($this->isError($response, route("management.roles.index"))) return $this->getErrorResponse();
+
+        return response()->view("management.roles.edit");
     }
 }

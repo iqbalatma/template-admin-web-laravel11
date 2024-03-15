@@ -10,6 +10,7 @@ use App\Repositories\RoleRepository;
 use Exception;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Iqbalatma\LaravelServiceRepo\Exceptions\EmptyDataException;
 
 class RoleService extends BaseService
 {
@@ -91,6 +92,40 @@ class RoleService extends BaseService
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
+            $response = getDefaultErrorResponse($e);
+        }
+
+        return $response;
+    }
+
+
+    /**
+     * @param string $id
+     * @return array
+     */
+    public function getEditDataById(string $id): array
+    {
+        try {
+            $this->checkData($id);
+            /** @var Role $role */
+            $role = $this->getServiceEntity();
+            $this->addBreadCrumbs(["Edit" => route("management.roles.edit", $id)]);
+
+            $permissions = PermissionService::getAllPermission();
+            PermissionService::setActivePermission($permissions, $role);
+
+            $response = [
+                "success" => true,
+                "role" => $role,
+                "breadcrumbs" => $this->getBreadcrumbs(),
+                "permissions" => $permissions->groupBy("feature_group")
+            ];
+        } catch (EmptyDataException $e) {
+            $response = [
+                "success" => false,
+                "message" => $e->getMessage(),
+            ];
+        } catch (Exception $e) {
             $response = getDefaultErrorResponse($e);
         }
 

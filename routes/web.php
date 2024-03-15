@@ -18,6 +18,7 @@ Route::middleware("auth:web")->group(function () {
             Route::get("", "index")->name("index");
             Route::get("create", "create")->name("create");
             Route::post("", "store")->name("store");
+            Route::get("edit/{id}", "edit")->name("edit");
         });
 
         Route::get("/permissions", [\App\Http\Controllers\Management\PermissionController::class, "index"])->name("permissions.index");

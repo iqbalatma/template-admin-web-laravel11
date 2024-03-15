@@ -22,7 +22,7 @@
                                 <td>{{$role->guard_name}}</td>
                                 <td>
                                     @if($role->is_mutable)
-                                        <x-button-edit :edit-url="route('management.roles.index')"></x-button-edit>
+                                        <x-button-edit :edit-url="route('management.roles.edit', $role->id)"></x-button-edit>
                                     @else
                                         -
                                     @endif

@@ -2,6 +2,7 @@
 
 namespace App\Services\Management;
 use App\Contracts\Abstracts\BaseService;
+use App\Models\Role;
 use App\Repositories\PermissionRepository;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
@@ -33,5 +34,19 @@ class PermissionService extends BaseService
         }
 
         return $permissions;
+    }
+
+    /**
+     * @param Collection $permissions
+     * @param Role $role
+     * @return void
+     */
+    public static function setActivePermission(Collection &$permissions, Role $role): void
+    {
+        $rolePermission =  array_flip($role->permissions->pluck("name")->toArray());
+        $permissions = $permissions->map(function ($item) use ($rolePermission) {
+            $item["is_active"] = isset($rolePermission[$item["name"]]);
+            return $item;
+        });
     }
 }
