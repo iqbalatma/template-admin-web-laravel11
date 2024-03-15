@@ -17,12 +17,11 @@ class RoleController extends Controller
      */
     public function index(RoleService $service):Response
     {
-        $response = $service->getAllDataRole();
+        $response = $service->getAllData();
         viewShare($response);
 
         return response()->view("management.roles.index");
     }
-
 
     /**
      * @param RoleService $service
@@ -43,7 +42,7 @@ class RoleController extends Controller
      */
     public function store(RoleService $service, StoreRoleRequest $request): RedirectResponse
     {
-        $response = $service->addNewDataRole($request->validated());
+        $response = $service->addNewData($request->validated());
 
         if ($this->isError($response)) return $this->getErrorResponse();
 
@@ -74,10 +73,24 @@ class RoleController extends Controller
      */
     public function update(RoleService $service, UpdateRoleRequest $request, string $id): RedirectResponse
     {
-        $response = $service->updateDataRoleById($id, $request->validated());
+        $response = $service->updateDataById($id, $request->validated());
 
         if ($this->isError($response)) return $this->getErrorResponse();
 
         return redirect()->route("management.roles.index")->with("success", "Update data role successfully");
+    }
+
+
+    /**
+     * @param RoleService $service
+     * @param string $id
+     * @return RedirectResponse
+     */
+    public function destroy(RoleService $service, string $id): RedirectResponse
+    {
+        $response = $service->deleteDataById($id);
+
+        if ($this->isError($response)) return $this->getErrorResponse();
+        return redirect()->route("management.roles.index")->with("success", "Delete data role successfully");
     }
 }

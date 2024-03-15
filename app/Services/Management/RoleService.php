@@ -28,7 +28,7 @@ class RoleService extends BaseService
     /**
      * @return true[]
      */
-    public function getAllDataRole(): array
+    public function getAllData(): array
     {
         if (!($roles = Cache::get(config("cache.keys.all_role")))) {
             $roles = $this->repository->getAllData();
@@ -73,7 +73,7 @@ class RoleService extends BaseService
      * @param array $requestedData
      * @return array
      */
-    public function addNewDataRole(array $requestedData): array
+    public function addNewData(array $requestedData): array
     {
         try {
             $response = [
@@ -134,11 +134,11 @@ class RoleService extends BaseService
 
 
     /**
-     * @param string $id
+     * @param string|int $id
      * @param array $requestedData
      * @return array|true[]
      */
-    public function updateDataRoleById(string $id, array $requestedData): array
+    public function updateDataById(string|int $id, array $requestedData): array
     {
         try {
             $response = ["success" => true];
@@ -161,6 +161,45 @@ class RoleService extends BaseService
             RoleChangedEvent::dispatch();
             DB::commit();
         } catch (EmptyDataException $e) {
+            DB::rollBack();
+            $response = [
+                "success" => false,
+                "message" => $e->getMessage(),
+            ];
+        } catch (Exception $e) {
+            DB::rollBack();
+            $response = getDefaultErrorResponse($e);
+        }
+
+        return $response;
+    }
+
+
+    /**
+     * @param string|int $id
+     * @return array|true[]
+     */
+    public function deleteDataById(string|int $id): array
+    {
+        try {
+            $response = [
+                "success" => true
+            ];
+
+            $this->checkData($id);
+
+            /** @var Role $role */
+            $role = $this->getServiceEntity();
+
+            if (!$role->is_mutable){
+                $response = [
+                    "success" => false,
+                    "message" => "This data role cannot be deleted because non mutable",
+                ];
+            }
+
+            $role->delete();
+        }catch (EmptyDataException $e) {
             DB::rollBack();
             $response = [
                 "success" => false,

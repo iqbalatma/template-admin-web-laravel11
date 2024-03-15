@@ -2,7 +2,10 @@
 
 namespace App\Contracts\Abstracts;
 
-abstract class BaseService extends \Iqbalatma\LaravelServiceRepo\BaseService {
+use Illuminate\Database\Eloquent\Model;
+
+abstract class BaseService extends \Iqbalatma\LaravelServiceRepo\BaseService
+{
     protected array $breadcrumbs;
 
     /**
@@ -26,5 +29,14 @@ abstract class BaseService extends \Iqbalatma\LaravelServiceRepo\BaseService {
         foreach ($newBreadcrumbs as $key => $breadcrumb) {
             $this->breadcrumbs[$key] = $breadcrumb;
         }
+    }
+
+    /**
+     * @param Model $entity
+     * @return void
+     */
+    protected function checkIsEligibleToDelete(Model $entity): void
+    {
+
     }
 }

@@ -20,6 +20,7 @@ Route::middleware("auth:web")->group(function () {
             Route::post("", "store")->name("store");
             Route::get("edit/{id}", "edit")->name("edit");
             Route::patch("{id}", "update")->name("update");
+            Route::delete("{id}", "destroy")->name("destroy");
         });
 
         Route::get("/permissions", [\App\Http\Controllers\Management\PermissionController::class, "index"])->name("permissions.index");
