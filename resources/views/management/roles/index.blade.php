@@ -21,7 +21,7 @@
                                 <td class="text-bold-500">{{$role->name}}</td>
                                 <td>{{$role->guard_name}}</td>
                                 <td>
-                                    @if($role->is_mutable)
+                                    @if($role->name !== \App\Enums\Role::SUPER_ADMIN->value)
                                         <x-button-edit :edit-url="route('management.roles.edit', $role->id)"></x-button-edit>
                                     @else
                                         -

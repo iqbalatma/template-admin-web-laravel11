@@ -5,13 +5,14 @@
         </div>
         <div class="card-content">
             <div class="card-body">
-                <form action="{{route('management.roles.store')}}" method="POST">
+                <form action="{{route('management.roles.update', $role->id)}}" method="POST">
                     @csrf
+                    @method('PATCH')
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="name" class="mb-2">Role Name</label>
-                                <input type="text" class="form-control" id="name" placeholder="Role Name" name="name" value="{{$role->name}}">
+                                <input type="text" class="form-control" id="name" placeholder="Role Name" name="name" value="{{$role->name}}" @if(!$role->is_mutable) disabled @endif>
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -21,7 +22,7 @@
                                     <hr>
                                     @foreach($permissionGroup as $subKey => $permission)
                                         <div class="form-check form-switch form-check-inline mb-4">
-                                            <input name="permissions[]" class="form-check-input" type="checkbox"
+                                            <input name="permission_ids[]" class="form-check-input" type="checkbox"
                                                    value="{{ $permission->id }}" @if($permission->is_active) checked
                                                    @endif id="permission{{ $permission->id }}">
                                             <label class="form-check-label"

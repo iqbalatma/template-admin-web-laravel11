@@ -84,8 +84,8 @@ class RoleService extends BaseService
             /** @var Role $role */
             $role = $this->repository->addNewData($requestedData);
 
-            if (isset($requestedData["permissions"])) {
-                $role->syncPermissions($requestedData["permissions"]);
+            if (isset($requestedData["permission_ids"])) {
+                $role->syncPermissions($requestedData["permission_ids"]);
             }
 
             RoleChangedEvent::dispatch();
@@ -126,6 +126,48 @@ class RoleService extends BaseService
                 "message" => $e->getMessage(),
             ];
         } catch (Exception $e) {
+            $response = getDefaultErrorResponse($e);
+        }
+
+        return $response;
+    }
+
+
+    /**
+     * @param string $id
+     * @param array $requestedData
+     * @return array|true[]
+     */
+    public function updateDataRoleById(string $id, array $requestedData): array
+    {
+        try {
+            $response = ["success" => true];
+
+            DB::beginTransaction();
+            $this->checkData($id);
+
+            /** @var Role $role */
+            $role = $this->getServiceEntity();
+
+            if ($role->is_mutable && isset($requestedData['name'])) {
+                $role->name = $requestedData["name"];
+            }
+
+            if (isset($requestedData["permission_ids"])) {
+                $role->syncPermissions($requestedData["permission_ids"]);
+            }
+
+            $role->save();
+            RoleChangedEvent::dispatch();
+            DB::commit();
+        } catch (EmptyDataException $e) {
+            DB::rollBack();
+            $response = [
+                "success" => false,
+                "message" => $e->getMessage(),
+            ];
+        } catch (Exception $e) {
+            DB::rollBack();
             $response = getDefaultErrorResponse($e);
         }
 

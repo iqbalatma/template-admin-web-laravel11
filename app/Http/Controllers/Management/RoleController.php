@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Management;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Management\Roles\StoreRoleRequest;
+use App\Http\Requests\Management\Roles\UpdateRoleRequest;
 use App\Services\Management\RoleService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
@@ -62,5 +63,21 @@ class RoleController extends Controller
         if ($this->isError($response, route("management.roles.index"))) return $this->getErrorResponse();
 
         return response()->view("management.roles.edit");
+    }
+
+
+    /**
+     * @param RoleService $service
+     * @param UpdateRoleRequest $request
+     * @param string $id
+     * @return RedirectResponse
+     */
+    public function update(RoleService $service, UpdateRoleRequest $request, string $id): RedirectResponse
+    {
+        $response = $service->updateDataRoleById($id, $request->validated());
+
+        if ($this->isError($response)) return $this->getErrorResponse();
+
+        return redirect()->route("management.roles.index")->with("success", "Update data role successfully");
     }
 }
