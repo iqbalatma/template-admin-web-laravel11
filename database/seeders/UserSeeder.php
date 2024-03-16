@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\Role;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -23,7 +24,8 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         foreach (self::DATA_USERS as $user){
-            User::query()->create($user);
+            $user = User::query()->create($user);
+            $user->assignRole(Role::SUPER_ADMIN);
         }
 
         User::factory()->count(100)->create();

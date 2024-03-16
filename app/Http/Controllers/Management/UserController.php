@@ -8,6 +8,7 @@ use App\Http\Requests\Management\Users\UpdateUserRequest;
 use App\Services\Management\UserService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -17,6 +18,7 @@ class UserController extends Controller
      */
     public function index(UserService $service): Response
     {
+//        dd(Auth::user()->getAllPermissions());
         $response = $service->getAllDataPaginated();
         viewShare($response);
         return response()->view("management.users.index");

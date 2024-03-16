@@ -2,7 +2,9 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between">
             <h4 class="card-title">All Data User</h4>
-            <x-button-create :create-url="route('management.users.create')"></x-button-create>
+            @can(\App\Enums\Permission::MANAGEMENT_USERS_STORE->value)
+                <x-button-create :create-url="route('management.users.create')"></x-button-create>
+            @endcan
         </div>
         <div class="card-content">
             <div class="card-body">
@@ -23,8 +25,14 @@
                                 <td class="text-bold-500">{{ucfirst($user->last_name)}}</td>
                                 <td class="text-bold-500">{{$user->email}}</td>
                                 <td class="text-bold-500">
-                                    <x-button-edit :edit-url="route('management.users.edit', $user->id)"></x-button-edit>
-                                    <x-button-delete :id="$user->id"></x-button-delete>
+                                    @can(\App\Enums\Permission::MANAGEMENT_USERS_UPDATE->value)
+                                    <x-button-edit
+                                        :edit-url="route('management.users.edit', $user->id)"></x-button-edit>
+                                    @endcan
+
+                                    @can(\App\Enums\Permission::MANAGEMENT_USERS_DESTROY->value)
+                                        <x-button-delete :id="$user->id"></x-button-delete>
+                                    @endcan
                                 </td>
                             </tr>
                         @endforeach
@@ -36,5 +44,7 @@
         </div>
     </div>
 
-    <x-modal-delete :delete-url="route('management.users.destroy', ':id')"></x-modal-delete>
+    @can(\App\Enums\Permission::MANAGEMENT_USERS_DESTROY->value)
+        <x-modal-delete :delete-url="route('management.users.destroy', ':id')"></x-modal-delete>
+    @endcan
 </x-layouts.dashboard.layout>

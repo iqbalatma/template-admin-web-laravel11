@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Permission;
 use Illuminate\Support\Facades\Route;
 
 
@@ -22,23 +23,23 @@ Route::middleware("auth:web")->group(function () {
 
     Route::prefix("management")->name("management.")->group(function () {
         Route::prefix("users")->name("users.")->controller(\App\Http\Controllers\Management\UserController::class)->group(function (){
-            Route::get("", "index")->name("index");
-            Route::get("create", "create")->name("create");
-            Route::post("", "store")->name("store");
-            Route::get("edit/{id}", "edit")->name("edit");
-            Route::patch("{id}", "update")->name("update");
-            Route::delete("{id}", "destroy")->name("destroy");
+            Route::get("", "index")->name("index")->middleware("permission:". Permission::MANAGEMENT_USERS_SHOW->value);
+            Route::get("create", "create")->name("create")->middleware("permission:". Permission::MANAGEMENT_USERS_STORE->value);
+            Route::post("", "store")->name("store")->middleware("permission:". Permission::MANAGEMENT_USERS_STORE->value);
+            Route::get("edit/{id}", "edit")->name("edit")->middleware("permission:". Permission::MANAGEMENT_USERS_UPDATE->value);
+            Route::patch("{id}", "update")->name("update")->middleware("permission:". Permission::MANAGEMENT_USERS_UPDATE->value);
+            Route::delete("{id}", "destroy")->name("destroy")->middleware("permission:". Permission::MANAGEMENT_USERS_DESTROY->value);
         });
 
         Route::prefix("roles")->name("roles.")->controller(\App\Http\Controllers\Management\RoleController::class)->group(function () {
-            Route::get("", "index")->name("index");
-            Route::get("create", "create")->name("create");
-            Route::post("", "store")->name("store");
-            Route::get("edit/{id}", "edit")->name("edit");
-            Route::patch("{id}", "update")->name("update");
-            Route::delete("{id}", "destroy")->name("destroy");
+            Route::get("", "index")->name("index")->middleware("permission:". Permission::MANAGEMENT_ROLES_SHOW->value);
+            Route::get("create", "create")->name("create")->middleware("permission:". Permission::MANAGEMENT_ROLES_STORE->value);
+            Route::post("", "store")->name("store")->middleware("permission:". Permission::MANAGEMENT_ROLES_STORE->value);
+            Route::get("edit/{id}", "edit")->name("edit")->middleware("permission:". Permission::MANAGEMENT_ROLES_UPDATE->value);
+            Route::patch("{id}", "update")->name("update")->middleware("permission:". Permission::MANAGEMENT_ROLES_UPDATE->value);
+            Route::delete("{id}", "destroy")->name("destroy")->middleware("permission:". Permission::MANAGEMENT_ROLES_DESTROY->value);
         });
 
-        Route::get("/permissions", [\App\Http\Controllers\Management\PermissionController::class, "index"])->name("permissions.index");
+        Route::get("/permissions", [\App\Http\Controllers\Management\PermissionController::class, "index"])->name("permissions.index")->middleware("permission:". Permission::MANAGEMENT_PERMISSIONS_SHOW->value);;
     });
 });
