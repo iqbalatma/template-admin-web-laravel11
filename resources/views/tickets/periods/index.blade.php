@@ -38,6 +38,7 @@
                                 </td>
                                 <td>
                                     <x-button-edit :edit-url="route('tickets.periods.edit', $period->id)"></x-button-edit>
+                                    <x-button-delete :id="$period->id"></x-button-delete>
                                 </td>
                             </tr>
                         @endforeach
@@ -47,7 +48,7 @@
             </div>
         </div>
     </div>
-    @can(\App\Enums\Permission::MANAGEMENT_ROLES_DESTROY->value)
-        <x-modal-delete :delete-url="route('management.roles.destroy', ':id')"></x-modal-delete>
+    @can(\App\Enums\Permission::TICKETS_PERIODS_DESTROY->value)
+        <x-modal-delete :delete-url="route('tickets.periods.destroy', ':id')"></x-modal-delete>
     @endcan
 </x-layouts.dashboard.layout>

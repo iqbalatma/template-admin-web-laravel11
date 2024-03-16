@@ -61,6 +61,7 @@ Route::middleware("auth:web")->group(function () {
             Route::post("", "store")->name("store")->middleware("permission:" . Permission::TICKETS_PERIODS_STORE->value);
             Route::get("edit/{id}", "edit")->name("edit")->middleware("permission:" . Permission::TICKETS_PERIODS_UPDATE->value);
             Route::patch("{id}", "update")->name("update")->middleware("permission:" . Permission::TICKETS_PERIODS_UPDATE->value);
+            Route::delete("{id}", "destroy")->name("destroy")->middleware("permission:" . Permission::TICKETS_PERIODS_DESTROY->value);
         });
     });
 });

@@ -4,6 +4,7 @@ namespace App\Services\Management;
 
 use App\Contracts\Abstracts\BaseService;
 use App\Events\RoleChangedEvent;
+use App\Exceptions\EntityStillInUseException;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Repositories\RoleRepository;
@@ -191,7 +192,7 @@ class RoleService extends BaseService
             /** @var Role $role */
             $role = $this->getServiceEntity();
 
-            if (!$role->is_mutable){
+            if (!$role->is_mutable) {
                 return [
                     "success" => false,
                     "message" => "This data role cannot be deleted because non mutable",
@@ -201,14 +202,12 @@ class RoleService extends BaseService
             $this->checkIsEligibleToDelete($role);
             $role->delete();
             RoleChangedEvent::dispatch();
-        }catch (EmptyDataException $e) {
-            DB::rollBack();
+        } catch (EntityStillInUseException|EmptyDataException $e) {
             $response = [
                 "success" => false,
                 "message" => $e->getMessage(),
             ];
         } catch (Exception $e) {
-            DB::rollBack();
             $response = getDefaultErrorResponse($e);
         }
 

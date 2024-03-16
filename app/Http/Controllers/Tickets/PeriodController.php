@@ -9,6 +9,8 @@ use App\Services\Tickets\PeriodService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Iqbalatma\LaravelServiceRepo\Exceptions\DeleteDataThatStillUsedException;
+use Iqbalatma\LaravelServiceRepo\Exceptions\EmptyDataException;
 
 class PeriodController extends Controller
 {
@@ -76,5 +78,19 @@ class PeriodController extends Controller
         if ($this->isError($response)) return $this->getErrorResponse();
 
         return redirect()->route('tickets.periods.index')->with("success", "Update period successfully");
+    }
+
+
+    /**
+     * @param PeriodService $service
+     * @param string $id
+     * @return RedirectResponse
+     */
+    public function destroy(PeriodService $service, string $id): RedirectResponse
+    {
+        $response = $service->deleteDataById($id);
+        if ($this->isError($response)) return $this->getErrorResponse();
+
+        return redirect()->route('tickets.periods.index')->with("success", "Delete period successfully");
     }
 }

@@ -39,7 +39,7 @@ abstract class BaseService extends \Iqbalatma\LaravelServiceRepo\BaseService
      */
     protected function checkIsEligibleToDelete(Model $entity): void
     {
-        foreach ($entity->relationCheckBeforeDelete as $relation){
+        foreach ($entity->relationCheckBeforeDelete ?? [] as $relation){
             if ($entity->{$relation}()->exists()){
                 throw new EntityStillInUseException("Cannot delete this entity because still in use");
             }

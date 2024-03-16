@@ -3,8 +3,10 @@
 namespace App\Services\Tickets;
 
 use App\Contracts\Abstracts\BaseService;
+use App\Exceptions\EntityStillInUseException;
 use App\Repositories\PeriodRepository;
 use Exception;
+use Illuminate\Support\Facades\DB;
 use Iqbalatma\LaravelServiceRepo\Exceptions\EmptyDataException;
 
 class PeriodService extends BaseService
@@ -58,14 +60,14 @@ class PeriodService extends BaseService
      * @param array $requestedData
      * @return true[]
      */
-    public function addNewData(array $requestedData):array
+    public function addNewData(array $requestedData): array
     {
-        try{
+        try {
             $this->repository->addNewData($requestedData);
             $response = [
                 "success" => true
             ];
-        }catch(Exception $e){
+        } catch (Exception $e) {
             $response = getDefaultErrorResponse($e);
         }
 
@@ -77,12 +79,12 @@ class PeriodService extends BaseService
      * @param string $id
      * @return array
      */
-    public function getEditDataById(string $id) : array
+    public function getEditDataById(string $id): array
     {
         $this->addBreadCrumbs([
             "Edit" => route("tickets.periods.edit", $id)
         ]);
-        try{
+        try {
             $this->checkData($id);
             $response = [
                 "success" => true,
@@ -92,9 +94,9 @@ class PeriodService extends BaseService
                 "pageTitle" => "Periods",
                 "pageSubTitle" => "Edit period of ticket",
             ];
-        }catch(EmptyDataException $e){
+        } catch (EmptyDataException $e) {
             $response = $e->getMessage();
-        }catch(Exception $e){
+        } catch (Exception $e) {
             $response = getDefaultErrorResponse($e);
         }
 
@@ -107,17 +109,47 @@ class PeriodService extends BaseService
      * @param array $requestedData
      * @return true[]
      */
-    public function updateDataById(string|int $id, array $requestedData):array
+    public function updateDataById(string|int $id, array $requestedData): array
     {
-        try{
+        try {
             $this->checkData($id);
             $this->getServiceEntity()->fill($requestedData)->save();
             $response = [
                 "success" => true
             ];
-        }catch(EmptyDataException $e){
+        } catch (EmptyDataException $e) {
             $response = $e->getMessage();
-        }catch(Exception $e){
+        } catch (Exception $e) {
+            $response = getDefaultErrorResponse($e);
+        }
+
+        return $response;
+    }
+
+
+    /**
+     * @param string|int $id
+     * @return true[]
+     */
+    public function deleteDataById(string|int $id): array
+    {
+        try {
+            $response = [
+                "success" => true
+            ];
+            $this->checkData($id);
+
+            $period = $this->getServiceEntity();
+
+            $this->checkIsEligibleToDelete($period);
+
+            $period->delete();
+        } catch (EntityStillInUseException|EmptyDataException $e) {
+            $response = [
+                "success" => false,
+                "message" => $e->getMessage(),
+            ];
+        } catch (Exception $e) {
             $response = getDefaultErrorResponse($e);
         }
 
