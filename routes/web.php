@@ -19,6 +19,10 @@ Route::middleware("guest")->group(function () {
 });
 
 
+Route::prefix("orders")->name("orders.")->controller(\App\Http\Controllers\Order\OrderController::class)->group(function (){
+    Route::get("", "create")->name("create");
+});
+
 Route::middleware("auth:web")->group(function () {
     Route::post("logout", [\App\Http\Controllers\Auth\AuthenticateController::class, "logout"])->name("logout");
 

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Repositories;
+use Illuminate\Support\Collection;
 use Iqbalatma\LaravelServiceRepo\BaseRepository;
 use Illuminate\Database\Eloquent\Builder;
 use App\Models\Period;
@@ -23,5 +24,16 @@ class PeriodRepository extends BaseRepository
      */
     public function applyAdditionalFilterParams(): void
     {
+    }
+
+
+    /**
+     * @return Collection
+     */
+    public static function getActive(): Collection
+    {
+        return self::init()
+            ->where("is_active")
+            ->get();
     }
 }
