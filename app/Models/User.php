@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Enums\Table;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -11,6 +12,17 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
+
+/**
+ * @property string id
+ * @property string first_name
+ * @property string last_name
+ * @property string password
+ * @property string email
+ * @property Carbon created_at
+ * @property Carbon updated_at
+ * @property Carbon deleted_at
+ */
 class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasUuids, HasRoles, SoftDeletes;

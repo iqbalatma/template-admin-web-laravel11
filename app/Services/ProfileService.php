@@ -2,8 +2,10 @@
 
 namespace App\Services;
 use App\Contracts\Abstracts\BaseService;
+use App\Models\User;
 use App\Repositories\UserRepository;
 use Exception;
+use Illuminate\Support\Facades\Hash;
 use Iqbalatma\LaravelServiceRepo\Exceptions\EmptyDataException;
 
 class ProfileService extends BaseService
@@ -77,6 +79,19 @@ class ProfileService extends BaseService
     {
         try{
             $this->checkData($id);
+
+            /** @var User $user */
+            $user = $this->getServiceEntity();
+
+            if (!Hash::check($oldPassword, $user->password)){
+                return [
+                    "success" => false,
+                    "message" => "Your old password is invalid"
+                ];
+            };
+
+            $user->password = $newPassword;
+            $user->save();
 
             $response = [
                 "success" => true

@@ -49,6 +49,6 @@ class ProfileController extends Controller
         $response = $service->updatePassword(Auth::id(), $request->input("old_password"), $request->input("new_password"));
         if ($this->isError($response)) return $this->getErrorResponse();
 
-        return redirect()->route("profiles.edit");
+        return redirect()->route("profiles.edit")->with("success", "Update your password successfully");
     }
 }
