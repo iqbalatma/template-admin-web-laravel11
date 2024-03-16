@@ -49,6 +49,27 @@ class MenuSeeder extends Seeder
             "permission_name" => Permission::MANAGEMENT_USERS_SHOW->value,
             "level" => 2,
         ],
+
+        [
+            "id" => "9b8f8e39-3f52-4465-aa95-a371520e3c04",
+            "label" => "Tickets",
+            "route_name_group" => null,
+            "route_name" => null,
+            "icon" => '<i class="bi bi-card-list"></i>',
+            "parent_id" => null,
+            "permission_name" => "s",
+            "level" => 1,
+        ],
+        [
+            "id" => "9b8f8e39-3f52-4465-aa95-a371520e3c05",
+            "label" => "Periods",
+            "route_name_group" => "tickets.periods",
+            "route_name" => "tickets.periods.index",
+            "icon" => null,
+            "parent_id" => "9b8f8e39-3f52-4465-aa95-a371520e3c04",
+            "permission_name" => "s",
+            "level" => 2,
+        ],
     ];
     /**
      * Run the database seeds.

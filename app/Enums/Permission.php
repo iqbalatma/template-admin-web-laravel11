@@ -45,4 +45,15 @@ enum Permission:string {
     #[Description("can delete data user")] #[FeatureGroup("management - users")]
     case MANAGEMENT_USERS_DESTROY = "management.users.destroy";
 
+
+    #TICKETS - PERIODS
+    #[Description("can show data periods")] #[FeatureGroup("tickets - periods")]
+    case TICKETS_PERIODS_SHOW = "tickets.periods.show";
+    #[Description("can add new data periods")] #[FeatureGroup("tickets - periods")]
+    case TICKETS_PERIODS_STORE = "tickets.periods.store";
+    #[Description("can update data periods")] #[FeatureGroup("tickets - periods")]
+    case TICKETS_PERIODS_UPDATE = "tickets.periods.update";
+    #[Description("can delete data periods")] #[FeatureGroup("tickets - periods")]
+    case TICKETS_PERIODS_DESTROY = "tickets.periods.destroy";
+
 }

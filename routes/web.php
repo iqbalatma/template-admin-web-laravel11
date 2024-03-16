@@ -10,11 +10,11 @@ Route::middleware("guest")->group(function () {
         Route::post("authenticate", "authenticate")->name("authenticate");
     });
 
-    Route::prefix("forgot-password")->name("forgot.password.")->controller(\App\Http\Controllers\Auth\ForgotPasswordController::class)->group(function (){
-       Route::get("", "showForgotPassword")->name("show.forgot.password");
-       Route::post("", "requestForgotPassword")->name("request.forgot.password");
-       Route::get("/reset/{email}/{token}", "showResetPassword")->name("request.reset.password");
-       Route::post("/reset", "resetPassword")->name("reset.password");
+    Route::prefix("forgot-password")->name("forgot.password.")->controller(\App\Http\Controllers\Auth\ForgotPasswordController::class)->group(function () {
+        Route::get("", "showForgotPassword")->name("show.forgot.password");
+        Route::post("", "requestForgotPassword")->name("request.forgot.password");
+        Route::get("/reset/{email}/{token}", "showResetPassword")->name("request.reset.password");
+        Route::post("/reset", "resetPassword")->name("reset.password");
     });
 });
 
@@ -51,5 +51,16 @@ Route::middleware("auth:web")->group(function () {
         });
 
         Route::get("/permissions", [\App\Http\Controllers\Management\PermissionController::class, "index"])->name("permissions.index")->middleware("permission:" . Permission::MANAGEMENT_PERMISSIONS_SHOW->value);;
+    });
+
+
+    Route::prefix("tickets")->name("tickets.")->group(function () {
+        Route::prefix("periods")->name("periods.")->controller(\App\Http\Controllers\Tickets\PeriodController::class)->group(function () {
+            Route::get("", "index")->name("index")->middleware("permission:" . Permission::TICKETS_PERIODS_SHOW->value);
+            Route::get("create", "create")->name("create")->middleware("permission:" . Permission::TICKETS_PERIODS_STORE->value);;
+            Route::post("", "store")->name("store")->middleware("permission:" . Permission::TICKETS_PERIODS_STORE->value);
+            Route::get("edit/{id}", "edit")->name("edit")->middleware("permission:" . Permission::TICKETS_PERIODS_UPDATE->value);
+            Route::patch("{id}", "update")->name("update")->middleware("permission:" . Permission::TICKETS_PERIODS_UPDATE->value);
+        });
     });
 });
