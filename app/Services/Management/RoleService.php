@@ -192,13 +192,15 @@ class RoleService extends BaseService
             $role = $this->getServiceEntity();
 
             if (!$role->is_mutable){
-                $response = [
+                return [
                     "success" => false,
                     "message" => "This data role cannot be deleted because non mutable",
                 ];
             }
 
+            $this->checkIsEligibleToDelete($role);
             $role->delete();
+            RoleChangedEvent::dispatch();
         }catch (EmptyDataException $e) {
             DB::rollBack();
             $response = [

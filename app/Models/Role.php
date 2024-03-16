@@ -19,6 +19,9 @@ class Role extends \Spatie\Permission\Models\Role
 {
     use HasUuids;
 
+    public array $relationCheckBeforeDelete = [
+        "users"
+    ];
     protected $table = Table::ROLES->value;
     protected $fillable = [
         "name", "guard_name", "is_mutable"

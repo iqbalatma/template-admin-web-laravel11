@@ -12,6 +12,7 @@
           type="image/png">
     <link rel="stylesheet" href="{{asset('dist/assets/compiled/css/app.css')}}">
     <link rel="stylesheet" href="{{asset('dist/assets/compiled/css/app-dark.css')}}">
+    @stack("styles")
 </head>
 
 <body>
@@ -37,7 +38,8 @@
 <script src="{{asset('dist/assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js')}}"></script>
 
 <script src="{{asset('dist/assets/compiled/js/app.js')}}"></script>
-
+@vite(["resources/js/app.js"])
+@stack("scripts")
 
 </body>
 

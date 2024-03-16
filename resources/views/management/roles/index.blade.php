@@ -29,7 +29,7 @@
                                     @endif
 
                                     @if($role->is_mutable)
-                                        <x-button-delete></x-button-delete>
+                                        <x-button-delete :id="$role->id"></x-button-delete>
                                     @endif
                                 </td>
                             </tr>
@@ -41,7 +41,5 @@
         </div>
     </div>
 
-    <x-modal-delete :delete-url="route('management.roles.index')"></x-modal-delete>
-
-
+    <x-modal-delete :delete-url="route('management.roles.destroy', ':id')"></x-modal-delete>
 </x-layouts.dashboard.layout>

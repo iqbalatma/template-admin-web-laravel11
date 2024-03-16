@@ -2,6 +2,7 @@
 
 namespace App\Contracts\Abstracts;
 
+use App\Exceptions\EntityStillInUseException;
 use Illuminate\Database\Eloquent\Model;
 
 abstract class BaseService extends \Iqbalatma\LaravelServiceRepo\BaseService
@@ -34,9 +35,14 @@ abstract class BaseService extends \Iqbalatma\LaravelServiceRepo\BaseService
     /**
      * @param Model $entity
      * @return void
+     * @throws EntityStillInUseException
      */
     protected function checkIsEligibleToDelete(Model $entity): void
     {
-
+        foreach ($entity->relationCheckBeforeDelete as $relation){
+            if ($entity->{$relation}()->exists()){
+                throw new EntityStillInUseException("Cannot delete this entity because still in use");
+            }
+        }
     }
 }
