@@ -5,10 +5,8 @@ import jQuery from "jquery";
 window.$ = jQuery
 $(document).ready(function () {
     let defaultDeleteUrl = $("#form-delete").attr("action");
-    $(".btn-delete").on("click", function () {
-        console.log("haha")
+    $(document).on("click", ".btn-delete", function () {
         const id = $(this).data("id");
-        console.log(id)
         changeFormUrlWithId(id, defaultDeleteUrl, "#form-delete")
     })
 });
