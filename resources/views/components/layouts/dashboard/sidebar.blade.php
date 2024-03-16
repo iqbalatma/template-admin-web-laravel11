@@ -72,87 +72,86 @@
                     <ul class="submenu ">
 
                         <li class="submenu-item  ">
-                            <a href="component-accordion.html" class="submenu-link">Accordion</a>
+                            <a href="{{asset("/dist/component-accordion.html")}}" class="submenu-link">Accordion</a>
+                        </li>
+
+                        <li class="submenu-item  ">
+                            <a href="{{asset('dist/component-alert.html')}}" class="submenu-link">Alert</a>
 
                         </li>
 
                         <li class="submenu-item  ">
-                            <a href="component-alert.html" class="submenu-link">Alert</a>
+                            <a href="{{asset('dist/component-badge.html')}}" class="submenu-link">Badge</a>
 
                         </li>
 
                         <li class="submenu-item  ">
-                            <a href="component-badge.html" class="submenu-link">Badge</a>
+                            <a href="{{asset('dist/component-breadcrumb.html')}}" class="submenu-link">Breadcrumb</a>
 
                         </li>
 
                         <li class="submenu-item  ">
-                            <a href="component-breadcrumb.html" class="submenu-link">Breadcrumb</a>
+                            <a href="{{asset('dist/component-button.html')}}" class="submenu-link">Button</a>
 
                         </li>
 
                         <li class="submenu-item  ">
-                            <a href="component-button.html" class="submenu-link">Button</a>
+                            <a href="{{asset('dist/component-card.html')}}" class="submenu-link">Card</a>
 
                         </li>
 
                         <li class="submenu-item  ">
-                            <a href="component-card.html" class="submenu-link">Card</a>
+                            <a href="{{asset('dist/component-carousel.html')}}" class="submenu-link">Carousel</a>
 
                         </li>
 
                         <li class="submenu-item  ">
-                            <a href="component-carousel.html" class="submenu-link">Carousel</a>
+                            <a href="{{asset('dist/component-collapse.html')}}" class="submenu-link">Collapse</a>
 
                         </li>
 
                         <li class="submenu-item  ">
-                            <a href="component-collapse.html" class="submenu-link">Collapse</a>
+                            <a href="{{asset('dist/component-dropdown.html')}}" class="submenu-link">Dropdown</a>
 
                         </li>
 
                         <li class="submenu-item  ">
-                            <a href="component-dropdown.html" class="submenu-link">Dropdown</a>
+                            <a href="{{asset('dist/component-list-group.html')}}" class="submenu-link">List Group</a>
 
                         </li>
 
                         <li class="submenu-item  ">
-                            <a href="component-list-group.html" class="submenu-link">List Group</a>
+                            <a href="{{asset('dist/component-modal.html')}}" class="submenu-link">Modal</a>
 
                         </li>
 
                         <li class="submenu-item  ">
-                            <a href="component-modal.html" class="submenu-link">Modal</a>
+                            <a href="{{asset('dist/component-navs.html')}}" class="submenu-link">Navs</a>
 
                         </li>
 
                         <li class="submenu-item  ">
-                            <a href="component-navs.html" class="submenu-link">Navs</a>
+                            <a href="{{asset('dist/component-pagination.html')}}" class="submenu-link">Pagination</a>
 
                         </li>
 
                         <li class="submenu-item  ">
-                            <a href="component-pagination.html" class="submenu-link">Pagination</a>
+                            <a href="{{asset('dist/component-progress.html')}}" class="submenu-link">Progress</a>
 
                         </li>
 
                         <li class="submenu-item  ">
-                            <a href="component-progress.html" class="submenu-link">Progress</a>
+                            <a href="{{asset('dist/component-spinner.html')}}" class="submenu-link">Spinner</a>
 
                         </li>
 
                         <li class="submenu-item  ">
-                            <a href="component-spinner.html" class="submenu-link">Spinner</a>
+                            <a href="{{asset('dist/component-toasts.html')}}" class="submenu-link">Toasts</a>
 
                         </li>
 
                         <li class="submenu-item  ">
-                            <a href="component-toasts.html" class="submenu-link">Toasts</a>
-
-                        </li>
-
-                        <li class="submenu-item  ">
-                            <a href="component-tooltip.html" class="submenu-link">Tooltip</a>
+                            <a href="{{asset('dist/component-tooltip.html')}}" class="submenu-link">Tooltip</a>
 
                         </li>
 
@@ -211,7 +210,7 @@
                 </li>
 
                 <li
-                    class="sidebar-item active has-sub">
+                    class="sidebar-item has-sub">
                     <a href="#" class='sidebar-link'>
                         <i class="bi bi-grid-1x2-fill"></i>
                         <span>Layouts</span>

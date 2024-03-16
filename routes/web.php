@@ -14,6 +14,15 @@ Route::middleware("auth:web")->group(function () {
     Route::get('/', [\App\Http\Controllers\DashboardController::class, "index"]);
 
     Route::prefix("management")->name("management.")->group(function () {
+        Route::prefix("users")->name("users.")->controller(\App\Http\Controllers\Management\UserController::class)->group(function (){
+            Route::get("", "index")->name("index");
+            Route::get("create", "create")->name("create");
+            Route::post("", "store")->name("store");
+            Route::get("edit/{id}", "edit")->name("edit");
+            Route::patch("{id}", "update")->name("update");
+            Route::delete("{id}", "destroy")->name("destroy");
+        });
+
         Route::prefix("roles")->name("roles.")->controller(\App\Http\Controllers\Management\RoleController::class)->group(function () {
             Route::get("", "index")->name("index");
             Route::get("create", "create")->name("create");

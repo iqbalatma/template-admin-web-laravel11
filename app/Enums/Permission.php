@@ -34,4 +34,15 @@ enum Permission:string {
     #[Description("can delete data role")] #[FeatureGroup("management - roles")]
     case MANAGEMENT_ROLES_DESTROY = "management.roles.destroy";
 
+
+    #MANAGEMENT - USERS
+    #[Description("can show data user")] #[FeatureGroup("management - users")]
+    case MANAGEMENT_USERS_SHOW = "management.users.show";
+    #[Description("can add new data user")] #[FeatureGroup("management - users")]
+    case MANAGEMENT_USERS_STORE = "management.users.store";
+    #[Description("can update data user")] #[FeatureGroup("management - users")]
+    case MANAGEMENT_USERS_UPDATE = "management.users.update";
+    #[Description("can delete data user")] #[FeatureGroup("management - users")]
+    case MANAGEMENT_USERS_DESTROY = "management.users.destroy";
+
 }

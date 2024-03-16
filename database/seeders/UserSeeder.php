@@ -25,5 +25,7 @@ class UserSeeder extends Seeder
         foreach (self::DATA_USERS as $user){
             User::query()->create($user);
         }
+
+        User::factory()->count(100)->create();
     }
 }

@@ -39,6 +39,16 @@ class MenuSeeder extends Seeder
             "permission_name" => Permission::MANAGEMENT_PERMISSIONS_SHOW->value,
             "level" => 2,
         ],
+        [
+            "id" => "9b8f8e39-3f52-4465-aa95-a371520e3c03",
+            "label" => "Users",
+            "route_name_group" => "management.users",
+            "route_name" => "management.users.index",
+            "icon" => null,
+            "parent_id" => "9b8f8e39-3f52-4465-aa95-a371520e3c00",
+            "permission_name" => Permission::MANAGEMENT_USERS_SHOW->value,
+            "level" => 2,
+        ],
     ];
     /**
      * Run the database seeds.
