@@ -65,4 +65,28 @@ class ProfileService extends BaseService
 
         return $response;
     }
+
+
+    /**
+     * @param string $id
+     * @param string $oldPassword
+     * @param string $newPassword
+     * @return true[]
+     */
+    public function updatePassword(string $id, string $oldPassword, string $newPassword):array
+    {
+        try{
+            $this->checkData($id);
+
+            $response = [
+                "success" => true
+            ];
+        }catch(EmptyDataException $e){
+            $response = $e->getMessage();
+        }catch(Exception $e){
+            $response = getDefaultErrorResponse($e);
+        }
+
+        return $response;
+    }
 }

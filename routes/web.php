@@ -17,6 +17,7 @@ Route::middleware("auth:web")->group(function () {
     Route::prefix("profiles")->name("profiles.")->controller(\App\Http\Controllers\ProfileController::class)->group(function (){
        Route::get("", "edit")->name("edit");
        Route::patch("", "update")->name("update");
+       Route::patch("update-password", "updatePassword")->name("update.password");
     });
 
     Route::prefix("management")->name("management.")->group(function () {
