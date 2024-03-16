@@ -1,0 +1,68 @@
+<?php
+
+namespace App\Services;
+use App\Contracts\Abstracts\BaseService;
+use App\Repositories\UserRepository;
+use Exception;
+use Iqbalatma\LaravelServiceRepo\Exceptions\EmptyDataException;
+
+class ProfileService extends BaseService
+{
+    protected $repository;
+
+    public function __construct()
+    {
+         $this->repository = new UserRepository();
+    }
+
+
+    /**
+     * @param string|int $id
+     * @return array
+     */
+    public function getEditDataById(string|int $id):array
+    {
+        try{
+            $this->checkData($id);
+
+            $response = [
+                "success" => true,
+                "title" => "Edit Profile",
+                "pageTitle" => "Edit Profile",
+                "pageSubTitle" => "Edit your profile",
+                "user" => $this->getServiceEntity()
+            ];
+        }catch(EmptyDataException $e){
+            $response = $e->getMessage();
+        }catch(Exception $e){
+            $response = getDefaultErrorResponse($e);
+        }
+
+        return $response;
+    }
+
+
+    /**
+     * @param string|int $id
+     * @param array $requestedData
+     * @return array
+     */
+    public function updateDataById(string|int $id, array $requestedData): array
+    {
+        try{
+            $this->checkData($id);
+            $this->getServiceEntity()
+                ->fill($requestedData)
+                ->save();
+            $response = [
+                "success" => true
+            ];
+        }catch(EmptyDataException $e){
+            $response = $e->getMessage();
+        }catch(Exception $e){
+            $response = getDefaultErrorResponse($e);
+        }
+
+        return $response;
+    }
+}
