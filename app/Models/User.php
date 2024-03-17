@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Contracts\Interfaces\DeletableRelationCheck;
 use App\Enums\Table;
 use App\Notifications\ResetPasswordNotification;
 use Carbon\Carbon;
@@ -24,11 +25,13 @@ use Spatie\Permission\Traits\HasRoles;
  * @property Carbon updated_at
  * @property Carbon deleted_at
  */
-class User extends Authenticatable
+class User extends Authenticatable implements DeletableRelationCheck
 {
     use HasFactory, Notifiable, HasUuids, HasRoles, SoftDeletes;
 
     protected $table = Table::USERS->value;
+    protected array $relationCheckBeforeDelete = [];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -72,5 +75,14 @@ class User extends Authenticatable
     public function sendPasswordResetNotification($token): void
     {
         $this->notify(new ResetPasswordNotification($token));
+    }
+
+    /**
+     * @return array
+     */
+    #[\Override]
+    public function getRelationCheckBeforeDelete(): array
+    {
+        return $this->relationCheckBeforeDelete;
     }
 }

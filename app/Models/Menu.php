@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Contracts\Interfaces\DeletableRelationCheck;
 use App\Enums\Table;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -24,11 +25,12 @@ use Illuminate\Support\Collection;
  * @property Carbon updated_at
  * @property Collection<Menu> children
  */
-class Menu extends Model
+class Menu extends Model implements DeletableRelationCheck
 {
     use HasUuids;
 
     protected $table = Table::MENUS->value;
+    public array $relationCheckBeforeDelete = [];
 
     protected $fillable = [
         "label", "icon", "parent_id", "permission_name", "level", "route_name", "route_name_group"
@@ -50,5 +52,13 @@ class Menu extends Model
     public function children():HasMany
     {
         return $this->hasMany(__CLASS__, "parent_id", "id");
+    }
+
+    /**
+     * @return array|string[]
+     */
+    #[\Override] public function getRelationCheckBeforeDelete(): array
+    {
+        return $this->relationCheckBeforeDelete;
     }
 }

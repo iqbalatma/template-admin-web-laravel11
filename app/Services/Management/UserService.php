@@ -51,25 +51,6 @@ class UserService extends BaseService
     }
 
 
-    /**
-     * @param array $requestedData
-     * @return true[]
-     */
-    public function addNewData(array $requestedData):array
-    {
-        try {
-            $this->repository->addNewData($requestedData);
-
-            $response = [
-                "success" => true
-            ];
-        }catch (Exception $e){
-            $response = getDefaultErrorResponse($e);
-        }
-
-        return $response;
-    }
-
 
     /**
      * @param string $id
@@ -89,55 +70,6 @@ class UserService extends BaseService
                 "pageSubTitle" => "Edit new user",
                 "breadcrumbs" => $this->getBreadcrumbs(),
                 "user" => $this->getServiceEntity(),
-            ];
-        }catch(EmptyDataException $e){
-            $response = $e->getMessage();
-        }catch(Exception $e){
-            $response = getDefaultErrorResponse($e);
-        }
-
-        return $response;
-    }
-
-
-    /**
-     * @param string|int $id
-     * @param array $requestedData
-     * @return true[]
-     */
-    public function updateDataById(string|int $id, array $requestedData):array
-    {
-        try{
-            $this->checkData($id);
-
-            $this->getServiceEntity()
-                ->fill($requestedData)
-                ->save();
-            $response = [
-                "success" => true
-            ];
-        }catch(EmptyDataException $e){
-            $response = $e->getMessage();
-        }catch(Exception $e){
-            $response = getDefaultErrorResponse($e);
-        }
-
-        return $response;
-    }
-
-
-    /**
-     * @param string|int $id
-     * @return true[]
-     */
-    public function deleteDataById(string|int $id):array
-    {
-        try{
-            $this->checkData($id);
-
-            $this->getServiceEntity()->delete();
-            $response = [
-                "success" => true
             ];
         }catch(EmptyDataException $e){
             $response = $e->getMessage();

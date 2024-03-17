@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Contracts\Interfaces\DeletableRelationCheck;
 use App\Enums\Table;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -16,13 +17,22 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
  * @property Carbon created_at
  * @property Carbon updated_at
  */
-class Permission extends \Spatie\Permission\Models\Permission
+class Permission extends \Spatie\Permission\Models\Permission implements DeletableRelationCheck
 {
     use HasUuids;
+    public array $relationCheckBeforeDelete = [];
 
     protected $table = Table::PERMISSIONS->value;
 
     protected $fillable = [
         "name", "guard_name", "feature_group", "description"
     ];
+
+    /**
+     * @return array|string[]
+     */
+    #[\Override] public function getRelationCheckBeforeDelete(): array
+    {
+        return $this->relationCheckBeforeDelete;
+    }
 }

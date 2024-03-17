@@ -1,0 +1,23 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use App\Contracts\Interfaces\DeletableRelationCheck;
+use Override;
+
+class {{ class }} extends Model implements DeletableRelationCheck
+{
+    use HasFactory;
+
+    protected array $relationCheckBeforeDelete = [];
+
+   /**
+     * @return array
+     */
+    #[Override]
+    public function getRelationCheckBeforeDelete(): array {
+        return $this->relationCheckBeforeDelete;
+    }
+}
