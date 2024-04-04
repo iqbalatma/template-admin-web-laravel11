@@ -3,3 +3,5 @@
 
 ## TODO
 - Update profile
+- Assign user to a role
+- 
