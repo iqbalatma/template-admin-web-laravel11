@@ -18,7 +18,6 @@ class UserController extends Controller
      */
     public function index(UserService $service): Response
     {
-//        dd(Auth::user()->getAllPermissions());
         $response = $service->getAllDataPaginated();
         viewShare($response);
         return response()->view("management.users.index");

@@ -9,7 +9,10 @@ use Illuminate\Http\Response;
 
 class PermissionController extends Controller
 {
-
+    /**
+     * @param PermissionService $service
+     * @return Response
+     */
     public function index(PermissionService $service): Response
     {
         $response = $service->getAllData();
