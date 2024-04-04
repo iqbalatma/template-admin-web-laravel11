@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Override;
 use Spatie\Permission\Traits\HasRoles;
 
 
@@ -80,7 +81,7 @@ class User extends Authenticatable implements DeletableRelationCheck
     /**
      * @return array
      */
-    #[\Override]
+    #[Override]
     public function getRelationCheckBeforeDelete(): array
     {
         return $this->relationCheckBeforeDelete;

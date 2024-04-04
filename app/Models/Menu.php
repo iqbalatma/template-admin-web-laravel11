@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
+use Override;
 
 
 /**
@@ -57,7 +58,7 @@ class Menu extends Model implements DeletableRelationCheck
     /**
      * @return array|string[]
      */
-    #[\Override] public function getRelationCheckBeforeDelete(): array
+    #[Override] public function getRelationCheckBeforeDelete(): array
     {
         return $this->relationCheckBeforeDelete;
     }

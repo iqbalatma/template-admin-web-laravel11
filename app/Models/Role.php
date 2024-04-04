@@ -7,6 +7,7 @@ use App\Enums\Table;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
+use Override;
 
 /**
  * @property string id
@@ -29,7 +30,7 @@ class Role extends \Spatie\Permission\Models\Role implements DeletableRelationCh
     /**
      * @return array|string[]
      */
-    #[\Override] public function getRelationCheckBeforeDelete(): array
+    #[Override] public function getRelationCheckBeforeDelete(): array
     {
         return $this->relationCheckBeforeDelete;
     }

@@ -6,6 +6,7 @@ use App\Contracts\Interfaces\DeletableRelationCheck;
 use App\Enums\Table;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Override;
 
 
 /**
@@ -31,7 +32,7 @@ class Permission extends \Spatie\Permission\Models\Permission implements Deletab
     /**
      * @return array|string[]
      */
-    #[\Override] public function getRelationCheckBeforeDelete(): array
+    #[Override] public function getRelationCheckBeforeDelete(): array
     {
         return $this->relationCheckBeforeDelete;
     }
