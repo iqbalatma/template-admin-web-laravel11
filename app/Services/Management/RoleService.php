@@ -8,6 +8,7 @@ use App\Models\Permission;
 use App\Models\Role;
 use App\Repositories\RoleRepository;
 use Exception;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Iqbalatma\LaravelServiceRepo\Exceptions\EmptyDataException;
@@ -26,22 +27,31 @@ class RoleService extends BaseService
     }
 
     /**
-     * @return true[]
+     * @return Collection
      */
-    public function getAllData(): array
+    public function getAllRole():Collection
     {
         if (!($roles = Cache::get(config("cache.keys.all_roles")))) {
             $roles = $this->repository->getAllData();
             Cache::put(config("cache.keys.all_roles"), $roles);
         }
 
+        return $roles;
+    }
+
+
+    /**
+     * @return true[]
+     */
+    public function getAllData(): array
+    {
         try {
             $response = [
                 "success" => true,
                 "title" => "Role",
                 "pageTitle" => "Role",
                 "pageSubTitle" => "Role that will attach to every user",
-                "roles" => $roles,
+                "roles" => $this->getAllRole(),
                 "breadcrumbs" => $this->getBreadcrumbs()
             ];
         } catch (Exception $e) {
@@ -50,6 +60,7 @@ class RoleService extends BaseService
 
         return $response;
     }
+
 
     /**
      * @return array
