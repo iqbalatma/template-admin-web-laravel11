@@ -12,21 +12,15 @@ abstract class Controller
      * Use to check is response from service error or not
      *
      * @param array $response
-     * @param string|null $redirectTo
+     * @param string|null $to
      * @return bool
      */
-    protected function isError(array $response, string $redirectTo = null): bool
+    protected function isError(array $response, string $to = null): bool
     {
         if (!$response["success"]) {
-            if ($redirectTo) {
-                $this->setErrorResponse(
-                    redirect()->to($redirectTo)->withErrors(["errors" => $response["message"]])->withInput()
-                );
-            } else {
-                $this->setErrorResponse(
-                    redirect()->back()->withErrors(["errors" => $response["message"]])->withInput()
-                );
-            }
+            $redirect = $to ? redirect()->to($to) : redirect()->back();
+            $redirect =  $redirect->withErrors(["errors" => $response["message"]])->withInput();
+            $this->setErrorResponse($redirect);
             return true;
         }
 
