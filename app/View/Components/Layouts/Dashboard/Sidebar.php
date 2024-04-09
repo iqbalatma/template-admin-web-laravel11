@@ -18,13 +18,13 @@ class Sidebar extends Component
      */
     public function __construct()
     {
-        if(!($allMenu = Cache::get(config("cache.keys.all_menu")))){
+        if(!($allMenu = Cache::get(config("cache.keys.all_menus")))){
             $allMenu = MenuRepository::getAllTopLevelMenuWithChildren();
             $allMenu = $allMenu->map(function (Menu $item){
                 $item->children_routes = $item->children->pluck("route_name_group");
                 return $item;
             });
-            Cache::put(config("cache.keys.all_menu"), $allMenu);
+            Cache::put(config("cache.keys.all_menus"), $allMenu);
         }
 
         $allMenu->map(function (Menu $item){

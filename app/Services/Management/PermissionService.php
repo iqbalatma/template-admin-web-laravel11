@@ -28,9 +28,9 @@ class PermissionService extends BaseService
      */
     public static function getAllPermission(): Collection
     {
-        if(!($permissions = Cache::get(config("cache.keys.all_permission")))){
+        if(!($permissions = Cache::get(config("cache.keys.all_permissions")))){
             $permissions = PermissionRepository::getAllData();
-            Cache::put(config("cache.keys.all_permission"), $permissions);
+            Cache::put(config("cache.keys.all_permissions"), $permissions);
         }
 
         return $permissions;

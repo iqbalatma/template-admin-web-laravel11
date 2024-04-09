@@ -30,9 +30,9 @@ class RoleService extends BaseService
      */
     public function getAllData(): array
     {
-        if (!($roles = Cache::get(config("cache.keys.all_role")))) {
+        if (!($roles = Cache::get(config("cache.keys.all_roles")))) {
             $roles = $this->repository->getAllData();
-            Cache::put(config("cache.keys.all_role"), $roles);
+            Cache::put(config("cache.keys.all_roles"), $roles);
         }
 
         try {
