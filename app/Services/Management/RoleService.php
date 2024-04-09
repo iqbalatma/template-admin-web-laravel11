@@ -129,6 +129,8 @@ class RoleService extends BaseService
             $response = [
                 "success" => true,
                 "role" => $role,
+                "pageTitle" => "Role",
+                "pageSubTitle" => "Edit role that will attach to every user",
                 "breadcrumbs" => $this->getBreadcrumbs(),
                 "permissions" => $permissions->groupBy("feature_group")
             ];

@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Management\Roles;
 
+use App\Enums\Table;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreRoleRequest extends FormRequest
 {
@@ -24,7 +26,7 @@ class StoreRoleRequest extends FormRequest
         return [
             "name" => "required|max:128",
             "permission_ids" => "array",
-            "permission_ids.*" => "uuid",
+            "permission_ids.*" => ["uuid", Rule::exists(Table::PERMISSIONS->value, "id")],
         ];
     }
 }

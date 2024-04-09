@@ -21,6 +21,6 @@ class InvalidateRoleCache
      */
     public function handle(RoleChangedEvent $event): void
     {
-        Cache::forget(config("cache.keys.all_role"));
+        Cache::forget(config("cache.keys.all_roles"));
     }
 }

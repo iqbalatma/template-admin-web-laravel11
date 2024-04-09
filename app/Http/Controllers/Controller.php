@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
 use InvalidArgumentException;
 
 abstract class Controller
@@ -68,5 +69,29 @@ abstract class Controller
         }
 
         return $redirectResponse;
+    }
+
+    /**
+     * @param array $response
+     * @param string|Response $toOrResponse
+     * @param Response|null $responseView
+     * @return RedirectResponse|Response
+     */
+    protected function responseView(array $response, string|Response $toOrResponse, Response $responseView = null):RedirectResponse|Response
+    {
+        if ($toOrResponse instanceof Response){
+            $to = null;
+            $responseView = $toOrResponse;
+        }else{
+            $to = $toOrResponse;
+        }
+
+        if ($this->isError($response, $to)) return $this->getErrorResponse();
+
+        if (!$responseView){
+            throw new InvalidArgumentException("Since toOrResponse is route for error response, responseView became required");
+        }
+
+        return $responseView;
     }
 }

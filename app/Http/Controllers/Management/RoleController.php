@@ -44,9 +44,12 @@ class RoleController extends Controller
     {
         $response = $service->addNewData($request->validated());
 
-        if ($this->isError($response)) return $this->getErrorResponse();
-
-        return redirect()->route("management.roles.index")->with("success", "Add new data role successfully");
+        return $this->redirect(
+            $response,
+            redirect()
+                ->route("management.roles.index")
+                ->with("success", "Add new data role successfully")
+        );
     }
 
     /**
@@ -58,10 +61,11 @@ class RoleController extends Controller
     {
         $response = $service->getEditDataById($id);
         viewShare($response);
-
-        if ($this->isError($response, route("management.roles.index"))) return $this->getErrorResponse();
-
-        return response()->view("management.roles.edit");
+        return $this->responseView(
+            $response,
+            response()
+                ->view("management.roles.edit")
+        );
     }
 
 
@@ -75,9 +79,12 @@ class RoleController extends Controller
     {
         $response = $service->updateDataById($id, $request->validated());
 
-        if ($this->isError($response)) return $this->getErrorResponse();
-
-        return redirect()->route("management.roles.index")->with("success", "Update data role successfully");
+        return $this->redirect(
+            $response,
+            redirect()
+                ->route("management.roles.index")
+                ->with("success", "Update data role successfully")
+        );
     }
 
 
@@ -90,7 +97,11 @@ class RoleController extends Controller
     {
         $response = $service->deleteDataById($id);
 
-        if ($this->isError($response)) return $this->getErrorResponse();
-        return redirect()->route("management.roles.index")->with("success", "Delete data role successfully");
+        return $this->redirect(
+            $response,
+            redirect()
+                ->route("management.roles.index")
+                ->with("success", "Delete data role successfully")
+        );
     }
 }
