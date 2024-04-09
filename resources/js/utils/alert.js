@@ -7,7 +7,7 @@ function alertError(message, newConfig){
         text: message,
     }
 
-    if(newConfig!=undefined){
+    if(newConfig!==undefined){
         config = {...config, ...newConfig}
     }
 
@@ -22,7 +22,7 @@ function alertSuccess(message, newConfig){
         text: message,
     }
 
-    if(newConfig!=undefined){
+    if(newConfig!==undefined){
         config = {...config, ...newConfig}
     }
 
@@ -42,7 +42,7 @@ function alertConfirm(successCallback, newConfig){
         cancelButtonText: 'Batalkan !'
     };
 
-    if(newConfig != undefined){
+    if(newConfig !== undefined){
         config = {...config, ...newConfig}
     }
 

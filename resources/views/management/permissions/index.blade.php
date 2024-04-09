@@ -6,7 +6,7 @@
         <div class="card-content">
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-lg">
+                    <table class="table table-lg" id="table-permission">
                         <thead>
                         <tr>
                             <th>Name</th>
@@ -30,4 +30,12 @@
             </div>
         </div>
     </div>
+
+    @push("scripts")
+        <script>
+            window.onload = function () {
+                $("#table-permission").DataTable();
+            };
+        </script>
+    @endpush
 </x-layouts.dashboard.layout>
