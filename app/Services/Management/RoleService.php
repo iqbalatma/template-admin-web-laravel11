@@ -29,10 +29,10 @@ class RoleService extends BaseService
     /**
      * @return Collection
      */
-    public function getAllRole():Collection
+    public static function getAllRole():Collection
     {
         if (!($roles = Cache::get(config("cache.keys.all_roles")))) {
-            $roles = $this->repository->getAllData();
+            $roles = RoleRepository::getAllData();
             Cache::put(config("cache.keys.all_roles"), $roles);
         }
 
@@ -51,7 +51,7 @@ class RoleService extends BaseService
                 "title" => "Role",
                 "pageTitle" => "Role",
                 "pageSubTitle" => "Role that will attach to every user",
-                "roles" => $this->getAllRole(),
+                "roles" => self::getAllRole(),
                 "breadcrumbs" => $this->getBreadcrumbs()
             ];
         } catch (Exception $e) {

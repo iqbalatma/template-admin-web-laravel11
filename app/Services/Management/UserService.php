@@ -3,8 +3,10 @@
 namespace App\Services\Management;
 
 use App\Contracts\Abstracts\BaseService;
+use App\Models\User;
 use App\Repositories\UserRepository;
 use Exception;
+use Illuminate\Support\Facades\DB;
 use Iqbalatma\LaravelServiceRepo\Exceptions\EmptyDataException;
 
 class UserService extends BaseService
@@ -46,6 +48,7 @@ class UserService extends BaseService
             "title" => "Create Users",
             "pageTitle" => "Create Users",
             "pageSubTitle" => "Create new user",
+            "roles" => RoleService::getAllRole(),
             "breadcrumbs" => $this->getBreadcrumbs(),
         ];
     }
@@ -68,12 +71,54 @@ class UserService extends BaseService
                 "title" => "Edit User",
                 "pageTitle" => "Edit Users",
                 "pageSubTitle" => "Edit new user",
+                "roles" => RoleService::getAllRole(),
                 "breadcrumbs" => $this->getBreadcrumbs(),
                 "user" => $this->getServiceEntity(),
             ];
         }catch(EmptyDataException $e){
             $response = $e->getMessage();
         }catch(Exception $e){
+            $response = getDefaultErrorResponse($e);
+        }
+
+        return $response;
+    }
+
+
+    /**
+     * @param string|int $id
+     * @param array $requestedData
+     * @return array|true[]
+     */
+    public function updateDataById(string|int $id, array $requestedData):array
+    {
+        try {
+            $response = [
+                "success" => true
+            ];
+
+            $this->checkData($id);
+
+            /** @var User $user */
+            $user = $this->getServiceEntity();
+
+            DB::beginTransaction();
+            $user->fill($requestedData)
+                ->save();
+
+            if (isset($requestedData["role_ids"])) {
+                $user->roles()->sync($requestedData["role_ids"]);
+            }
+
+            DB::commit();
+        }catch(EmptyDataException $e){
+            DB::rollBack();
+            $response = [
+                "success" => false,
+                "message" => $e->getMessage()
+            ];
+        }catch (Exception $e){
+            DB::rollBack();
             $response = getDefaultErrorResponse($e);
         }
 

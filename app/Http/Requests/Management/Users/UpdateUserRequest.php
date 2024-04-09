@@ -24,8 +24,10 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "first_name" => "max:128",
+            "first_name" => "required|max:128",
             "last_name" => "max:128",
+            "role_ids" => "array",
+            "role_ids.*" => ["uuid", Rule::exists(Table::ROLES->value, "id")],
         ];
     }
 }

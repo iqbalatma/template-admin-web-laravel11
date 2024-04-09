@@ -41,8 +41,12 @@ class UserController extends Controller
     public function store(UserService $service, StoreUserRequest $request): RedirectResponse
     {
         $response = $service->addNewData($request->validated());
-        if ($this->isError($response)) return $this->getErrorResponse();
-        return redirect()->route("management.users.index")->with("success", "Add new data user successfully");
+        return $this->redirect(
+            $response,
+            redirect()
+                ->route("management.users.index")
+                ->with("success", "Add new data user successfully")
+        );
     }
 
 
@@ -54,9 +58,11 @@ class UserController extends Controller
     public function edit(UserService $service, string $id): RedirectResponse|Response
     {
         $response = $service->getEditDataById($id);
-        if ($this->isError($response)) return $this->getErrorResponse();
         viewShare($response);
-        return response()->view("management.users.edit");
+        return $this->responseView(
+            $response,
+            response()->view("management.users.edit")
+        );
     }
 
     /**
@@ -68,8 +74,12 @@ class UserController extends Controller
     public function update(UserService $service, UpdateUserRequest $request, string $id): RedirectResponse
     {
         $response = $service->updateDataById($id, $request->validated());
-        if ($this->isError($response)) return $this->getErrorResponse();
-        return redirect()->route("management.users.index")->with("success", "Update data user successfully");
+        return $this->redirect(
+            $response,
+            redirect()
+                ->route("management.users.index")
+                ->with("success", "Update data user successfully")
+        );
     }
 
     /**
@@ -80,7 +90,11 @@ class UserController extends Controller
     public function destroy(UserService $service, string $id)
     {
         $response = $service->deleteDataById($id);
-        if ($this->isError($response)) return $this->getErrorResponse();
-        return redirect()->route("management.users.index")->with("success", "Delete data user successfully");
+        return $this->redirect(
+            $response,
+            redirect()
+                ->route("management.users.index")
+                ->with("success", "Delete data user successfully")
+        );
     }
 }

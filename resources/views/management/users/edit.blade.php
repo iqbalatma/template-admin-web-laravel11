@@ -27,6 +27,20 @@
                                 <input type="email" class="form-control" id="email" placeholder="Email" name="email" disabled value="{{$user->email}}">
                             </div>
                         </div>
+
+                        <div class="row mt-4">
+                            @foreach($roles as $role)
+                                <div class="col-md-2">
+                                    <div class="form-check form-switch form-check-inline mb-4">
+                                        <input name="role_ids[]" class="form-check-input" type="checkbox"
+                                               value="{{ $role->id }}" id="role_{{ $role->id }}">
+                                        <label class="form-check-label"
+                                               for="role_{{ $role->id }}">{{ $role->name }}</label>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                        
                         <div class="col-md-12 d-flex justify-content-end gap-2 mt-4">
                             <x-button-back :back-url="route('management.users.index')"></x-button-back>
                             <x-button-submit></x-button-submit>

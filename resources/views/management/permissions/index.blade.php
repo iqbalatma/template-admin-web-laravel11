@@ -32,10 +32,8 @@
     </div>
 
     @push("scripts")
-        <script>
-            window.onload = function () {
-                $("#table-permission").DataTable();
-            };
+        <script type="module">
+            $("#table-permission").DataTable();
         </script>
     @endpush
 </x-layouts.dashboard.layout>
