@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
+use InvalidArgumentException;
 
 abstract class Controller
 {
@@ -44,5 +45,28 @@ abstract class Controller
     protected function getErrorResponse(): RedirectResponse
     {
         return $this->response;
+    }
+
+    /**
+     * @param array $response
+     * @param string|RedirectResponse $toOrRedirectResponse
+     * @param RedirectResponse|null $redirectResponse
+     * @return RedirectResponse
+     */
+    protected function redirect(array $response, string|RedirectResponse $toOrRedirectResponse, RedirectResponse $redirectResponse = null): RedirectResponse
+    {
+        if ($toOrRedirectResponse instanceof RedirectResponse){
+            $to = null;
+            $redirectResponse = $toOrRedirectResponse;
+        }else{
+            $to = $toOrRedirectResponse;
+        }
+        if ($this->isError($response, $to)) return $this->getErrorResponse();
+
+        if (!$redirectResponse){
+            throw new InvalidArgumentException("Since toRedirectResponse is route for error response, redirectResponse became required");
+        }
+
+        return $redirectResponse;
     }
 }
