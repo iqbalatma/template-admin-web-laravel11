@@ -13,24 +13,25 @@ use Illuminate\View\Component;
 class Sidebar extends Component
 {
     public Collection $_menus;
+
     /**
      * Create a new component instance.
      */
     public function __construct()
     {
-        if(!($allMenu = Cache::get(config("cache.keys.all_menus")))){
+        if (!($allMenu = Cache::get(config("cache.keys.all_menus")))) {
             $allMenu = MenuRepository::getAllTopLevelMenuWithChildren();
-            $allMenu = $allMenu->map(function (Menu $item){
+            $allMenu = $allMenu->map(function (Menu $item) {
                 $item->children_routes = $item->children->pluck("route_name_group");
                 return $item;
             });
             Cache::put(config("cache.keys.all_menus"), $allMenu);
         }
 
-        $allMenu->map(function (Menu $item){
+        $allMenu->map(function (Menu $item) {
             $item->is_child_active_exist = false;
-            foreach ($item->children_routes as $children_route){
-                if (request()->routeIs($children_route."*")){
+            foreach ($item->children_routes as $children_route) {
+                if (request()->routeIs($children_route . "*")) {
                     $item->is_child_active_exist = true;
                 }
             }

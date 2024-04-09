@@ -25,11 +25,16 @@ use Override;
  * @property Carbon created_at
  * @property Carbon updated_at
  * @property Collection<Menu> children
+ * @property Collection children_routes
+ * @property boolean is_child_active_exist
  */
 class Menu extends Model implements DeletableRelationCheck
 {
     use HasUuids;
 
+    /**
+     * @var Collection|mixed
+     */
     protected $table = Table::MENUS->value;
     public array $relationCheckBeforeDelete = [];
 

@@ -104,8 +104,8 @@ return [
 
     'prefix' => env('CACHE_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_cache_'),
     'keys' => [
-        "all_menu" => "all_menus",
-        "all_role" => "all_roles",
-        "all_permission" => "all_permissions",
+        "all_menus" => "all_menus",
+        "all_roles" => "all_roles",
+        "all_permissions" => "all_permissions",
     ]
 ];
