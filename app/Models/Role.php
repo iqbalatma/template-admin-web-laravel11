@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Contracts\Interfaces\DeletableRelationCheck;
 use App\Enums\Table;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Override;
@@ -16,8 +17,9 @@ use Override;
  * @property boolean is_mutable
  * @property Carbon created_at
  * @property Carbon updated_at
- */
-class Role extends \Spatie\Permission\Models\Role implements DeletableRelationCheck
+ * @property Collection<Permission> permissions
+ *
+ */class Role extends \Spatie\Permission\Models\Role implements DeletableRelationCheck
 {
     use HasUuids;
 

@@ -9,6 +9,14 @@ use Illuminate\Support\Facades\Cache;
 
 class PermissionService extends BaseService
 {
+    public function __construct()
+    {
+        $this->breadcrumbs = [
+            "Management" => "#",
+            "Permissions" => route("management.permissions.index"),
+        ];
+    }
+
     /**
      * @return array
      */
@@ -18,6 +26,7 @@ class PermissionService extends BaseService
             "title" => "Permission",
             "pageTitle" => "Permission",
             "pageSubTitle" => "Permission that allow user to access feature",
+            "breadcrumbs" => $this->getBreadcrumbs(),
             "permissions" => self::getAllPermission()
         ];
     }
