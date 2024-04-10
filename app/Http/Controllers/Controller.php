@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Closure;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use InvalidArgumentException;
@@ -52,9 +53,10 @@ abstract class Controller
      * @param array $response
      * @param string|RedirectResponse $toOrRedirectResponse
      * @param RedirectResponse|null $redirectResponse
+     * @param Closure|null $callback
      * @return RedirectResponse
      */
-    protected function redirect(array $response, string|RedirectResponse $toOrRedirectResponse, RedirectResponse $redirectResponse = null): RedirectResponse
+    protected function redirect(array $response, string|RedirectResponse $toOrRedirectResponse, RedirectResponse $redirectResponse = null, Closure $callback = null): RedirectResponse
     {
         if ($toOrRedirectResponse instanceof RedirectResponse){
             $to = null;
@@ -68,6 +70,10 @@ abstract class Controller
             throw new InvalidArgumentException("Since toRedirectResponse is route for error response, redirectResponse became required");
         }
 
+        if ($callback instanceof Closure){
+            $callback();
+        }
+
         return $redirectResponse;
     }
 
@@ -75,9 +81,10 @@ abstract class Controller
      * @param array $response
      * @param string|Response $toOrResponse
      * @param Response|null $responseView
+     * @param Closure|null $callback
      * @return RedirectResponse|Response
      */
-    protected function responseView(array $response, string|Response $toOrResponse, Response $responseView = null):RedirectResponse|Response
+    protected function responseView(array $response, string|Response $toOrResponse, Response $responseView = null, Closure $callback = null):RedirectResponse|Response
     {
         if ($toOrResponse instanceof Response){
             $to = null;
@@ -90,6 +97,10 @@ abstract class Controller
 
         if (!$responseView){
             throw new InvalidArgumentException("Since toOrResponse is route for error response, responseView became required");
+        }
+
+        if ($callback instanceof Closure){
+            $callback();
         }
 
         return $responseView;
