@@ -18,6 +18,7 @@ use Override;
  * @property Carbon created_at
  * @property Carbon updated_at
  * @property Collection<Permission> permissions
+ * @property boolean is_active
  *
  */class Role extends \Spatie\Permission\Models\Role implements DeletableRelationCheck
 {

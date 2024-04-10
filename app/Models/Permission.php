@@ -17,6 +17,7 @@ use Override;
  * @property string description
  * @property Carbon created_at
  * @property Carbon updated_at
+ * @property boolean is_active
  */
 class Permission extends \Spatie\Permission\Models\Permission implements DeletableRelationCheck
 {

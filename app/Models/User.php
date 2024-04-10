@@ -7,6 +7,7 @@ use App\Contracts\Interfaces\DeletableRelationCheck;
 use App\Enums\Table;
 use App\Notifications\ResetPasswordNotification;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -25,8 +26,9 @@ use Spatie\Permission\Traits\HasRoles;
  * @property Carbon created_at
  * @property Carbon updated_at
  * @property Carbon deleted_at
- */
-class User extends Authenticatable implements DeletableRelationCheck
+ * @property Collection<Role> roles
+ *
+ */class User extends Authenticatable implements DeletableRelationCheck
 {
     use HasFactory, Notifiable, HasUuids, HasRoles, SoftDeletes;
 

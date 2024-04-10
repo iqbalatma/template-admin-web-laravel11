@@ -32,7 +32,7 @@ class UserService extends BaseService
             "pageTitle" => "Users",
             "pageSubTitle" => "List all data user",
             "breadcrumbs" => $this->getBreadcrumbs(),
-            "users" => $this->repository->getAllDataPaginated()
+            "users" => $this->repository->orderColumn("created_at", "DESC")->getAllDataPaginated()
         ];
     }
 
@@ -66,14 +66,19 @@ class UserService extends BaseService
         ]);
         try{
             $this->checkData($id);
+            /** @var User $user */
+            $user = $this->getServiceEntity();
+            $roles = RoleService::getAllRole();
+
+            RoleService::setActiveRole($roles, $user);
             $response = [
                 "success" => true,
                 "title" => "Edit User",
                 "pageTitle" => "Edit Users",
                 "pageSubTitle" => "Edit new user",
-                "roles" => RoleService::getAllRole(),
                 "breadcrumbs" => $this->getBreadcrumbs(),
-                "user" => $this->getServiceEntity(),
+                "roles" => $roles,
+                "user" => $user
             ];
         }catch(EmptyDataException $e){
             $response = $e->getMessage();

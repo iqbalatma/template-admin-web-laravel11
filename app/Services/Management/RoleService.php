@@ -6,6 +6,7 @@ use App\Contracts\Abstracts\BaseService;
 use App\Events\RoleChangedEvent;
 use App\Models\Permission;
 use App\Models\Role;
+use App\Models\User;
 use App\Repositories\RoleRepository;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
@@ -227,5 +228,20 @@ class RoleService extends BaseService
         }
 
         return $response;
+    }
+
+
+    /**
+     * @param Collection $roles
+     * @param User $user
+     * @return void
+     */
+    public static function setActiveRole(Collection &$roles, User $user):void
+    {
+        $userRole = array_flip($user->getRoleNames()->toArray());
+        $roles = $roles->transform(function (Role $item) use ($userRole) {
+            $item->is_active = isset($userRole[$item->name]);
+            return $item;
+        });
     }
 }
