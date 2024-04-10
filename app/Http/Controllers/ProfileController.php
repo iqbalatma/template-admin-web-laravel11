@@ -33,9 +33,12 @@ class ProfileController extends Controller
     public function update(ProfileService $service, UpdateProfileRequest $request): RedirectResponse
     {
         $response = $service->updateDataById(Auth::id(), $request->validated());
-        if ($this->isError($response)) return $this->getErrorResponse();
-
-        return redirect()->back()->with("success", "Update your profile successfully");
+        return $this->redirect(
+            $response,
+            redirect()
+                ->back()
+                ->with("success", "Update your profile successfully")
+        );
     }
 
 
@@ -47,8 +50,11 @@ class ProfileController extends Controller
     public function updatePassword(ProfileService $service, UpdatePasswordRequest $request): RedirectResponse
     {
         $response = $service->updatePassword(Auth::id(), $request->input("old_password"), $request->input("new_password"));
-        if ($this->isError($response)) return $this->getErrorResponse();
-
-        return redirect()->route("profiles.edit")->with("success", "Update your password successfully");
+        return $this->redirect(
+            $response,
+            redirect()
+                ->route("profiles.edit")
+                ->with("success", "Update your password successfully")
+        );
     }
 }
