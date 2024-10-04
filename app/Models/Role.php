@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
-use App\Contracts\Interfaces\DeletableRelationCheck;
 use App\Enums\Table;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Model;
+use Iqbalatma\LaravelServiceRepo\Contracts\Interfaces\DeletableRelationCheck;
 use Override;
 
 /**
@@ -24,7 +23,8 @@ use Override;
 {
     use HasUuids;
 
-    public array $relationCheckBeforeDelete = ["users"];
+    protected const array RELATION_CHECK_BEFORE_DELETE = ["users"];
+
     protected $table = Table::ROLES->value;
     protected $fillable = [
         "name", "guard_name", "is_mutable"
@@ -35,6 +35,6 @@ use Override;
      */
     #[Override] public function getRelationCheckBeforeDelete(): array
     {
-        return $this->relationCheckBeforeDelete;
+        return self::RELATION_CHECK_BEFORE_DELETE;
     }
 }

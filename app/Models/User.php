@@ -3,7 +3,6 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Contracts\Interfaces\DeletableRelationCheck;
 use App\Enums\Table;
 use App\Notifications\ResetPasswordNotification;
 use Carbon\Carbon;
@@ -13,6 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Iqbalatma\LaravelServiceRepo\Contracts\Interfaces\DeletableRelationCheck;
 use Override;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -33,7 +33,7 @@ use Spatie\Permission\Traits\HasRoles;
     use HasFactory, Notifiable, HasUuids, HasRoles, SoftDeletes;
 
     protected $table = Table::USERS->value;
-    protected array $relationCheckBeforeDelete = [];
+    protected const array RELATION_CHECK_BEFORE_DELETE = [];
 
     /**
      * The attributes that are mass assignable.
@@ -86,6 +86,6 @@ use Spatie\Permission\Traits\HasRoles;
     #[Override]
     public function getRelationCheckBeforeDelete(): array
     {
-        return $this->relationCheckBeforeDelete;
+        return self::RELATION_CHECK_BEFORE_DELETE;
     }
 }

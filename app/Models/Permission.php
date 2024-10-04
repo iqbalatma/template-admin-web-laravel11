@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use App\Contracts\Interfaces\DeletableRelationCheck;
 use App\Enums\Table;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Iqbalatma\LaravelServiceRepo\Contracts\Interfaces\DeletableRelationCheck;
 use Override;
 
 
@@ -22,7 +22,7 @@ use Override;
 class Permission extends \Spatie\Permission\Models\Permission implements DeletableRelationCheck
 {
     use HasUuids;
-    public array $relationCheckBeforeDelete = [];
+    public const array RELATION_CHECK_BEFORE_DELETE = [];
 
     protected $table = Table::PERMISSIONS->value;
 
@@ -35,6 +35,6 @@ class Permission extends \Spatie\Permission\Models\Permission implements Deletab
      */
     #[Override] public function getRelationCheckBeforeDelete(): array
     {
-        return $this->relationCheckBeforeDelete;
+        return self::RELATION_CHECK_BEFORE_DELETE;
     }
 }

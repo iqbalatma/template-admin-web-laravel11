@@ -2,56 +2,13 @@
 
 namespace App\Contracts\Abstracts;
 
-use App\Contracts\Interfaces\DeletableRelationCheck;
 use App\Exceptions\EntityStillInUseException;
 use Exception;
-use Illuminate\Database\Eloquent\Model;
+use Iqbalatma\LaravelServiceRepo\Contracts\Interfaces\DeletableRelationCheck;
 use Iqbalatma\LaravelServiceRepo\Exceptions\EmptyDataException;
 
 abstract class BaseService extends \Iqbalatma\LaravelServiceRepo\BaseService
 {
-    protected array $breadcrumbs;
-
-    /**
-     * Use to get all data breadcrumbs
-     *
-     * @return array
-     */
-    protected function getBreadcrumbs(): array
-    {
-        return $this->breadcrumbs;
-    }
-
-    /**
-     * Use to add new breadcrumb
-     *
-     * @param array $newBreadcrumbs
-     * @return void
-     */
-    protected function addBreadCrumbs(array $newBreadcrumbs): void
-    {
-        foreach ($newBreadcrumbs as $key => $breadcrumb) {
-            $this->breadcrumbs[$key] = $breadcrumb;
-        }
-    }
-
-    /**
-     * @param DeletableRelationCheck $entity
-     * @return BaseService
-     * @throws EntityStillInUseException
-     */
-    protected function checkIsEligibleToDelete(DeletableRelationCheck $entity): self
-    {
-        foreach ($entity->getRelationCheckBeforeDelete() as $relation){
-            if ($entity->{$relation}()->exists()){
-                throw new EntityStillInUseException("Cannot delete this entity because still in use");
-            }
-        }
-
-        return $this;
-    }
-
-
     /**
      * @param string|int $id
      * @param array $requestedData
@@ -109,6 +66,7 @@ abstract class BaseService extends \Iqbalatma\LaravelServiceRepo\BaseService
             ];
             $this->checkData($id);
 
+            /** @var DeletableRelationCheck $entity */
             $entity = $this->getServiceEntity();
 
             $this->checkIsEligibleToDelete($entity);

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Contracts\Interfaces\DeletableRelationCheck;
 use App\Enums\Table;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -10,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
+use Iqbalatma\LaravelServiceRepo\Contracts\Interfaces\DeletableRelationCheck;
 use Override;
 
 
@@ -36,7 +36,8 @@ class Menu extends Model implements DeletableRelationCheck
      * @var Collection|mixed
      */
     protected $table = Table::MENUS->value;
-    public array $relationCheckBeforeDelete = [];
+    public const array RELATION_CHECK_BEFORE_DELETE = [];
+
 
     protected $fillable = [
         "label", "icon", "parent_id", "permission_name", "level", "route_name", "route_name_group"
@@ -65,6 +66,6 @@ class Menu extends Model implements DeletableRelationCheck
      */
     #[Override] public function getRelationCheckBeforeDelete(): array
     {
-        return $this->relationCheckBeforeDelete;
+        return self::RELATION_CHECK_BEFORE_DELETE;
     }
 }

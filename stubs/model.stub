@@ -4,20 +4,21 @@ namespace {{ namespace }};
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Contracts\Interfaces\DeletableRelationCheck;
+use Iqbalatma\LaravelServiceRepo\Contracts\Interfaces\DeletableRelationCheck;
 use Override;
 
 class {{ class }} extends Model implements DeletableRelationCheck
 {
     use HasFactory;
 
-    protected array $relationCheckBeforeDelete = [];
+    public const array RELATION_CHECK_BEFORE_DELETE = [];
 
-   /**
+    /**
      * @return array
      */
     #[Override]
-    public function getRelationCheckBeforeDelete(): array {
-        return $this->relationCheckBeforeDelete;
+    public function getRelationCheckBeforeDelete(): array
+    {
+        return self::RELATION_CHECK_BEFORE_DELETE;
     }
 }

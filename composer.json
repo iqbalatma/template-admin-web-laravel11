@@ -7,8 +7,8 @@
     "require": {
         "php": "^8.3",
         "archtechx/enums": "^1.0",
-        "iqbalatma/laravel-service-repo": "^3.3.13",
-        "iqbalatma/laravel-utils": "^1.4",
+        "iqbalatma/laravel-service-repo": "^3.4.2",
+        "iqbalatma/laravel-utils": "^1.5",
         "laravel/framework": "^11.0",
         "laravel/horizon": "^5.23",
         "laravel/telescope": "^5.0",
