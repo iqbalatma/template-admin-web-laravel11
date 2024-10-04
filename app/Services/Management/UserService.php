@@ -39,7 +39,7 @@ class UserService extends BaseService
     /**
      * @return array
      */
-    public function getCreateData():array
+    public function getCreateData(): array
     {
         $this->addBreadCrumbs([
             "Create" => route("management.users.create")
@@ -54,17 +54,16 @@ class UserService extends BaseService
     }
 
 
-
     /**
      * @param string $id
      * @return true[]
      */
-    public function getEditDataById(string $id):array
+    public function getEditDataById(string $id): array
     {
         $this->addBreadCrumbs([
             "Edit" => route("management.users.edit", $id)
         ]);
-        try{
+        try {
             $this->checkData($id);
             /** @var User $user */
             $user = $this->getServiceEntity();
@@ -80,9 +79,9 @@ class UserService extends BaseService
                 "roles" => $roles,
                 "user" => $user
             ];
-        }catch(EmptyDataException $e){
+        } catch (EmptyDataException $e) {
             $response = $e->getMessage();
-        }catch(Exception $e){
+        } catch (Exception $e) {
             $response = getDefaultErrorResponse($e);
         }
 
@@ -95,7 +94,7 @@ class UserService extends BaseService
      * @param array $requestedData
      * @return array|true[]
      */
-    public function updateDataById(string|int $id, array $requestedData):array
+    public function updateDataById(string|int $id, array $requestedData): array
     {
         try {
             $response = [
@@ -111,18 +110,16 @@ class UserService extends BaseService
             $user->fill($requestedData)
                 ->save();
 
-            if (isset($requestedData["role_ids"])) {
-                $user->roles()->sync($requestedData["role_ids"]);
-            }
+            $user->roles()->sync($requestedData["role_ids"] ?? []);
 
             DB::commit();
-        }catch(EmptyDataException $e){
+        } catch (EmptyDataException $e) {
             DB::rollBack();
             $response = [
                 "success" => false,
                 "message" => $e->getMessage()
             ];
-        }catch (Exception $e){
+        } catch (Exception $e) {
             DB::rollBack();
             $response = getDefaultErrorResponse($e);
         }

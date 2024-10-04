@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\Permission;
+use App\Http\Controllers\FileController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -21,6 +22,7 @@ Route::middleware("guest")->group(function () {
 
 Route::middleware("auth:web")->group(function () {
     Route::post("logout", [\App\Http\Controllers\Auth\AuthenticateController::class, "logout"])->name("logout");
+    Route::get("/files", [FileController::class, "show"])->name("files.show");
 
     Route::get('/', [\App\Http\Controllers\DashboardController::class, "index"]);
 

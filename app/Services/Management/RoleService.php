@@ -30,7 +30,7 @@ class RoleService extends BaseService
     /**
      * @return Collection
      */
-    public static function getAllRole():Collection
+    public static function getAllRole(): Collection
     {
         if (!($roles = Cache::get(config("cache.keys.all_roles")))) {
             $roles = RoleRepository::getAllData();
@@ -168,10 +168,7 @@ class RoleService extends BaseService
                 $role->name = $requestedData["name"];
             }
 
-            if (isset($requestedData["permission_ids"])) {
-                $role->syncPermissions($requestedData["permission_ids"]);
-            }
-
+            $role->syncPermissions($requestedData["permission_ids"] ?? []);
             $role->save();
             RoleChangedEvent::dispatch();
             DB::commit();
@@ -206,7 +203,7 @@ class RoleService extends BaseService
             /** @var Role $role */
             $role = $this->getServiceEntity();
 
-            if (!$role->is_mutable){
+            if (!$role->is_mutable) {
                 return [
                     "success" => false,
                     "message" => "This data role cannot be deleted because non mutable",
@@ -216,14 +213,12 @@ class RoleService extends BaseService
             $this->checkIsEligibleToDelete($role);
             $role->delete();
             RoleChangedEvent::dispatch();
-        }catch (EmptyDataException $e) {
-            DB::rollBack();
+        } catch (EmptyDataException $e) {
             $response = [
                 "success" => false,
                 "message" => $e->getMessage(),
             ];
         } catch (Exception $e) {
-            DB::rollBack();
             $response = getDefaultErrorResponse($e);
         }
 
@@ -236,7 +231,7 @@ class RoleService extends BaseService
      * @param User $user
      * @return void
      */
-    public static function setActiveRole(Collection &$roles, User $user):void
+    public static function setActiveRole(Collection &$roles, User $user): void
     {
         $userRole = array_flip($user->getRoleNames()->toArray());
         $roles = $roles->transform(function (Role $item) use ($userRole) {
